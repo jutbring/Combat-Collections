@@ -296,14 +296,12 @@ PrefabInstance:
         type: 3}
       propertyPath: sword
       value: 
-      objectReference: {fileID: 11400000, guid: 1208a1efd597b0c47920a8265a0c8583,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: helmet
       value: 
-      objectReference: {fileID: 11400000, guid: 439784f1b25d0124e9986ab194cae3fb,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: unitStats

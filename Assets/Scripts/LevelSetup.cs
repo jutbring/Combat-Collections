@@ -10,6 +10,7 @@ public class LevelSetup : MonoBehaviour
     public Level level = null;
     [SerializeField] bool loadInstantly = true;
     [SerializeField] bool pixelPerfectPosition = true;
+    [SerializeField] SpriteRenderer positionReference = null;
 
     [Header("Self")]
     [SerializeField] TMP_Text levelText = null;
@@ -20,12 +21,14 @@ public class LevelSetup : MonoBehaviour
     {
         if (pixelPerfectPosition)
         {
+            float pixelsPerUnit = positionReference.sprite.pixelsPerUnit;
             Vector3 desiredPosition = transform.localPosition - new Vector3(
-                transform.localPosition.x % (1 / (float)GameSettings.pixelsPerUnit),
-                transform.localPosition.y % (1 / (float)GameSettings.pixelsPerUnit))
+                transform.localPosition.x % (1 / pixelsPerUnit),
+                transform.localPosition.y % (1 / pixelsPerUnit))
             + new Vector3(
-                1 / (float)(2 * GameSettings.pixelsPerUnit),
-                1 / (float)(2 * GameSettings.pixelsPerUnit));
+                1 / (2 * pixelsPerUnit),
+                1 / (2 * pixelsPerUnit),
+                0);
             transform.localPosition = desiredPosition;
         }
         if (loadInstantly)

@@ -893,7 +893,9 @@ MonoBehaviour:
   speechBubblePrefab: {fileID: 3440772758616432864, guid: 77404421f6deb6d4eafa600ad9e937c8,
     type: 3}
   speechBubblePosition: {fileID: 1514450955}
-  levelParallax: 0.025
+  levelParallax: 0.02
+  mapTop: {fileID: 2264790312323565345}
+  mapParallax: 0
 --- !u!1 &2589812943910967852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,6 +1451,12 @@ PrefabInstance:
 --- !u!224 &2775317154931371905 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2346466813406727726, guid: ae636ed3cd225c34caf4f673bcef5e7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 437899326256226735}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2264790312323565345 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1836797773339977358, guid: ae636ed3cd225c34caf4f673bcef5e7f,
     type: 3}
   m_PrefabInstance: {fileID: 437899326256226735}
   m_PrefabAsset: {fileID: 0}

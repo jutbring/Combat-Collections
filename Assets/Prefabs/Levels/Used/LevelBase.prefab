@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 11400000, guid: 73f5e41ce2be4244db7016401eeddd9a, type: 2}
   loadInstantly: 0
+  pixelPerfectPosition: 1
+  positionReference: {fileID: 0}
   levelText: {fileID: 4839364409948118309}
 --- !u!1 &8983916620939895399
 GameObject:
@@ -291,7 +293,7 @@ PrefabInstance:
     - target: {fileID: 2207118511493501078, guid: 2769c6a87cf425b4f95d2be522f68dbd,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2400672355160462507, guid: 2769c6a87cf425b4f95d2be522f68dbd,
         type: 3}

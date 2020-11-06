@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
   m_Name: Obsidian Helmet
   m_EditorClassIdentifier: 
+  itemType: 2
   itemSprite: {fileID: 21300000, guid: 740e94e4d3253b14ea85079d405f0399, type: 3}
+  dangerFactor: 1
   damage: 1
-  stunChance: 1
-  stunTime: 1
+  weakeningChance: 1
+  weakeningStrength: 1
   critChance: 1
   critStrength: 1
   chargeStrength: 1

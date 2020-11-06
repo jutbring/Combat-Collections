@@ -26,10 +26,12 @@ public class MapSystem : MonoBehaviour
     public Inventory playerInventory = null;
     public Fade fade = null;
     [SerializeField] SpeechBubble speechBubblePrefab = null;
-    [SerializeField] Transform speechBubblePosition;
+    [SerializeField] Transform speechBubblePosition = null;
 
     [Header("Visual")]
     [SerializeField] float levelParallax = 0f;
+    [SerializeField] Transform mapTop = null;
+    [SerializeField] float mapParallax = 0f;
 
     GameObject speechBubble = null;
     Menu inventory = null;
@@ -102,6 +104,7 @@ public class MapSystem : MonoBehaviour
                 levels[i].transform.GetChild(0).transform.localPosition = map.localPosition * levelParallax;
             }
         }
+        mapTop.transform.localPosition = map.localPosition * mapParallax;
     }
     void UpdateInventory()
     {

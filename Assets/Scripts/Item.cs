@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/New Item", order = 2)]
 public class Item : ScriptableObject
 {
+    public enum itemTypes { Stats, Sword, Helmet }
+    public itemTypes itemType = itemTypes.Stats;
     public Sprite itemSprite = null;
     public int dangerFactor = 1;
     [Header("Offence")]
