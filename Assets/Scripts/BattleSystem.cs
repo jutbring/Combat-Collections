@@ -24,6 +24,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Sprite timeSlowedImage = null;
 
     [Header("Battle Setup")]
+    public bool started = false;
     public Level levelStats = null;
     [SerializeField] GameObject playerPrefab = null;
     Unit player = null;
@@ -46,6 +47,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] AudioSource musicSourceIntense = null;
     [SerializeField] AudioSource musicSourceCalm = null;
     [SerializeField] AudioOrganizer audioOrganizer = null;
+    [SerializeField] Menu pauseMenu = null;
     [SerializeField] Menu defeatMenu = null;
     [SerializeField] Menu victoryMenu = null;
 
@@ -69,10 +71,19 @@ public class BattleSystem : MonoBehaviour
     bool victoryMenuSet = false;
     bool musicPlaying = true;
     bool intenseMusic = false;
+    Animator pauseMenuAnimator = null;
+    private void Start()
+    {
+        if (FindObjectOfType<LevelSetup>() == null)
+        {
+            StartGame(levelStats);
+        }
+    }
     public void StartGame(Level level)
     {
-        print("Shit!");
+        started = true;
         Settings();
+        currentEnemy = 0;
         levelStats = level;
         musicSourceCalm.clip = levelStats.battleMusicCalm;
         musicSourceIntense.clip = levelStats.battleMusicIntense;
@@ -150,6 +161,10 @@ public class BattleSystem : MonoBehaviour
                 }
                 break;
         }
+        for (int i = 0; i < uiButtons.Count; i++)
+        {
+            uiButtons[i].gameObject.SetActive(!paused && buttonsVisible);
+        }
         switch (state)
         {
             case BattleStates.Won:
@@ -188,11 +203,22 @@ public class BattleSystem : MonoBehaviour
             }
         }
     }
-    void TogglePause()
+    public void TogglePause()
     {
+        if (GameSettings.isFading || gameEnded) return;
         paused = !paused;
         Time.timeScale = Convert.ToInt32(!paused) * GameSettings.defaultTimeScale;
         pauseEffect.weight = Convert.ToInt32(paused);
+        if (paused)
+        {
+            Animator menu = Instantiate(pauseMenu.gameObject, transform).GetComponent<Animator>();
+            menu.GetComponent<Menu>().instantiator = this;
+            pauseMenuAnimator = menu;
+        }
+        else
+        {
+            pauseMenuAnimator.SetTrigger("Close");
+        }
     }
     void UpdateTimeScaleEffect()
     {
@@ -525,7 +551,22 @@ public class BattleSystem : MonoBehaviour
             droppedItem.transform.parent = null;
             droppedItem.transform.position += new Vector3(0, 0.5f);
             ItemHolder droppedItemHolder = droppedItem.GetComponent<ItemHolder>();
-            droppedItemHolder.item = (levelStats.potentialLoot[UnityEngine.Random.Range(0, levelStats.potentialLoot.Count)]);
+            List<Item> possibleItems = new List<Item>();
+            for (int i = 0; i < levelStats.potentialLoot.Count; i++)
+            {
+                if (levelStats.potentialLoot[i].itemType != player.inventory.lastItemType)
+                {
+                    possibleItems.Add(levelStats.potentialLoot[i]);
+                }
+            }
+            if (possibleItems.Count > 0)
+            {
+                droppedItemHolder.item = (possibleItems[UnityEngine.Random.Range(0, possibleItems.Count)]);
+            }
+            else
+            {
+                droppedItemHolder.item = (player.inventory.items[UnityEngine.Random.Range(0, player.inventory.items.Count)]);
+            }
             droppedItemHolder.battleSystem = this;
             itemHolder = droppedItemHolder;
         }

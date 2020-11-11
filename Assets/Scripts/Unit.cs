@@ -49,6 +49,11 @@ public class Unit : MonoBehaviour
         stats = Item.CreateInstance<Item>();
         animator = GetComponent<Animator>();
         animator.SetBool("Player", player);
+        if (inventory)
+        {
+            helmet = inventory.GetEquippedItem(Item.itemTypes.Helmet);
+            sword = inventory.GetEquippedItem(Item.itemTypes.Sword);
+        }
         SetStats(unitStats);
         SetStats(helmet);
         SetStats(sword);
@@ -62,24 +67,24 @@ public class Unit : MonoBehaviour
                 swordSprite.sprite = item.itemSprite;
             if (item == helmet)
                 helmetSprite.sprite = item.itemSprite;
-            stats.damage *= item.damage;
-            stats.weakeningChance *= item.weakeningChance;
-            stats.weakeningStrength *= item.weakeningStrength;
-            stats.critChance *= item.critChance;
-            stats.critStrength *= item.critStrength;
-            stats.chargeStrength *= item.chargeStrength;
-            stats.poisonAmount *= item.poisonAmount;
-            stats.poisonChance *= item.poisonChance;
-            stats.poisonStrength *= item.poisonStrength;
-            stats.ignitionAmount *= item.ignitionAmount;
-            stats.ignitionChance *= item.ignitionChance;
-            stats.ignitionStrength *= item.ignitionStrength;
+            stats.damage += item.damage;
+            stats.weakeningChance += item.weakeningChance;
+            stats.weakeningStrength += item.weakeningStrength;
+            stats.critChance += item.critChance;
+            stats.critStrength += item.critStrength;
+            stats.chargeStrength += item.chargeStrength;
+            stats.poisonAmount += item.poisonAmount;
+            stats.poisonChance += item.poisonChance;
+            stats.poisonStrength += item.poisonStrength;
+            stats.ignitionAmount += item.ignitionAmount;
+            stats.ignitionChance += item.ignitionChance;
+            stats.ignitionStrength += item.ignitionStrength;
 
-            stats.resistance *= item.resistance;
-            stats.blockStrength *= item.blockStrength;
+            stats.resistance += item.resistance;
+            stats.blockStrength += item.blockStrength;
 
-            stats.maxHealth *= item.maxHealth;
-            stats.healStrength *= item.healStrength;
+            stats.maxHealth += item.maxHealth;
+            stats.healStrength += item.healStrength;
         }
     }
     private void Update()
@@ -139,8 +144,15 @@ public class Unit : MonoBehaviour
         }
         if (GetChance(stats.weakeningChance))
         {
-            target.weakened = true;
-            target.weakenedStrength = stats.weakeningStrength;
+            if (target.charging)
+            {
+                target.charging = false;
+            }
+            else
+            {
+                target.weakened = true;
+                target.weakenedStrength = stats.weakeningStrength;
+            }
         }
         charging = false;
         weakened = false;
@@ -236,7 +248,14 @@ public class Unit : MonoBehaviour
     }
     public void Charge()
     {
-        charging = true;
+        if (weakened)
+        {
+            weakened = false;
+        }
+        else
+        {
+            charging = true;
+        }
     }
     public void DeathParticle()
     {
@@ -244,7 +263,7 @@ public class Unit : MonoBehaviour
     }
     bool GetChance(float oddsPercent)
     {
-        if (oddsPercent <= 1)
+        if (oddsPercent <= 0)
             return false;
         float randomFloat = UnityEngine.Random.Range(0.00f, 100.01f);
         return randomFloat < oddsPercent;

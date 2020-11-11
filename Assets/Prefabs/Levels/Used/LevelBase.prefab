@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 11400000, guid: 73f5e41ce2be4244db7016401eeddd9a, type: 2}
-  loadInstantly: 0
-  pixelPerfectPosition: 1
+  loadInstantly: 1
+  pixelPerfectPosition: 0
   positionReference: {fileID: 0}
   levelText: {fileID: 4839364409948118309}
 --- !u!1 &8983916620939895399

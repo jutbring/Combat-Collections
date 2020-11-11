@@ -17,7 +17,7 @@ public class LevelSetup : MonoBehaviour
 
     BattleSystem battleSystem = null;
     MapSystem mapSystem = null;
-    private void Start()
+    private void Awake()
     {
         if (pixelPerfectPosition)
         {
@@ -59,9 +59,9 @@ public class LevelSetup : MonoBehaviour
         {
             mapSystem.fade.FadeIn();
         }
-        StartCoroutine(WaitForFadeout());
+        StartCoroutine(WaitForFadeIn());
     }
-    IEnumerator WaitForFadeout()
+    IEnumerator WaitForFadeIn()
     {
         yield return new WaitForSeconds(GameSettings.fadeInTime);
         DontDestroyOnLoad(gameObject);
@@ -73,15 +73,15 @@ public class LevelSetup : MonoBehaviour
         battleSystem = GameObject.FindWithTag("GameController").GetComponent<BattleSystem>();
         if (battleSystem)
         {
-            print(level);
-            battleSystem.StartGame(level);
-            Destroy(gameObject);
+            if (!battleSystem.started)
+            {
+                battleSystem.StartGame(level);
+                FindObjectOfType<Fade>().FadeOut();
+                Destroy(gameObject);
+            }
         }
-        else
-        {
-            yield return new WaitForEndOfFrame();
-            StartCoroutine(StartBattleSystem());
-        }
+        yield return new WaitForEndOfFrame();
         GameSettings.isFading = false;
+        StartCoroutine(StartBattleSystem());
     }
 }

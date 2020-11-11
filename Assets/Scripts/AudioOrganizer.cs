@@ -22,7 +22,7 @@ namespace Organizer.Audio
         }
         void UpdatePitch()
         {
-            if (scalePitchToTimeScale)
+            if (scalePitchToTimeScale && Time.deltaTime != 0)
             {
                 for (int i = 0; i < audioChannels.Count; i++)
                 {

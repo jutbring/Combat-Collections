@@ -103,7 +103,8 @@ public class CameraController : MonoBehaviour
             {
                 canShake = false;
             }
-            float shakeTimeScaled = shakeTime * (1 + (scaledPower / power));
+            lastPower = scaledPower;
+            float shakeTimeScaled = shakeTime * ((1 + (scaledPower / power) / shakePowerMod));
             float posX = UnityEngine.Random.Range(-1f, 1f);
             float posY = UnityEngine.Random.Range(-1f, 1f);
             float rot = UnityEngine.Random.Range(-1f, 1f);
@@ -111,7 +112,6 @@ public class CameraController : MonoBehaviour
             shakeRotation = rot * scaledPower * shakeRotationMod;
             yield return new WaitForSeconds(shakeTimeScaled);
 
-            lastPower = scaledPower;
             nextShakePosition = new Vector2(0, 0);
             shakeRotation = 0;
             yield return new WaitForSeconds(shakeTimeScaled);

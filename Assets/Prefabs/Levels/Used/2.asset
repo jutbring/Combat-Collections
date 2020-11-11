@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e6c03e70aee0e4aaf1fb159414b7fb, type: 3}
   m_Name: 2
   m_EditorClassIdentifier: 
-  levelIndex: 2
+  tutorial: 0
   potentialLoot:
-  - {fileID: 11400000, guid: 1208a1efd597b0c47920a8265a0c8583, type: 2}
-  - {fileID: 11400000, guid: 439784f1b25d0124e9986ab194cae3fb, type: 2}
+  - {fileID: 11400000, guid: 5c3280220e5c95f4eadbc044a59117d2, type: 2}
+  - {fileID: 11400000, guid: a50dc1cfc803552488591bfd6bf82de8, type: 2}
   enemies:
-  - {fileID: 1469674388548084620, guid: 60c095d5224f1144689fb215bf573826, type: 3}
-  - {fileID: 1469674388548084620, guid: 60c095d5224f1144689fb215bf573826, type: 3}
+  - {fileID: 1469674388548084620, guid: 9c41ed87ffb49e44792b7967fbfc895c, type: 3}
   background: {fileID: 21300000, guid: 62ecaf5f270d8a34dad57bf72c5aee0e, type: 3}
   battleMusicIntro: {fileID: 8300000, guid: 38d826200fc76ef4593d2b200a8d1aa1, type: 3}
   battleMusicCalm: {fileID: 8300000, guid: 3dfe3d2673850f446910ac036345cbc3, type: 3}
