@@ -5,27 +5,31 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/New Item", order = 2)]
 public class Item : ScriptableObject
 {
+    public enum itemTypes { Stats, Sword, Helmet, Amulet }
+    public itemTypes itemType = itemTypes.Stats;
     public Sprite itemSprite = null;
-    public int dangerFactor = 1;
+    public int dangerFactor = 0;
     [Header("Offence")]
-    public float damage = 1f;
-    public float weakeningChance = 1f;
-    public float weakeningStrength = 1f;
-    public float critChance = 1f;
-    public float critStrength = 1f;
-    public float chargeStrength = 1f;
-    public float poisonChance = 1f;
-    public float poisonStrength = 1f;
-    public float poisonAmount = 1f;
-    public float ignitionChance = 1f;
-    public float ignitionStrength = 1f;
-    public float ignitionAmount = 1f;
-    [Header("Defence")]
-    public float resistance = 1f;
-    public float blockStrength = 1f;
+    public float damage = 0f;
+    public float weakeningChance = 0f;
+    public float weakeningStrength = 0f;
+    public float critChance = 0f;
+    public float critStrength = 0f;
+    public float chargeStrength = 0f;
+    public float poisonChance = 0f;
+    public float poisonStrength = 0f;
+    public float poisonAmount = 0f;
+    public float ignitionChance = 0f;
+    public float ignitionStrength = 0f;
+    public float ignitionAmount = 0f;
+    [Header("Defense")]
+    public float resistance = 0f;
+    public float blockStrength = 0f;
     [Header("Health")]
-    public float maxHealth = 1f;
-    public float healStrength = 1f;
+    public float maxHealth = 0f;
+    public float healStrength = 0f;
+    [Header("Upgrade")]
+    public Item upgradeItem = null;
 
     public int GetDangerFactor()
     {

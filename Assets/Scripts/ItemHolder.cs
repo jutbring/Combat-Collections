@@ -40,11 +40,8 @@ public class ItemHolder : MonoBehaviour
             battleSystem = GameObject.FindWithTag("GameController").GetComponent<BattleSystem>();
         }
         startPosition = transform.position;
-        float itemSize = item.itemSprite.pivot.x + item.itemSprite.pivot.y;
-        spriteRenderer.transform.localPosition = new Vector2(0, -(item.itemSprite.pivot.x - item.itemSprite.pivot.y) / itemSize);
-        spriteRenderer.transform.localRotation = Quaternion.Euler(0, 0, 0/* -45 + (item.itemSprite.pivot.y / item.itemSprite.rect.size.y * 90)*/);
-
         spriteRenderer.sprite = item.itemSprite;
+        spriteRenderer.transform.localPosition = GameSettings.GetSpriteOffset(spriteRenderer.sprite);
         player = GameObject.FindWithTag("Player").transform;
     }
     private void Update()

@@ -10,22 +10,25 @@ public class LevelSetup : MonoBehaviour
     public Level level = null;
     [SerializeField] bool loadInstantly = true;
     [SerializeField] bool pixelPerfectPosition = true;
+    [SerializeField] SpriteRenderer positionReference = null;
 
     [Header("Self")]
     [SerializeField] TMP_Text levelText = null;
 
     BattleSystem battleSystem = null;
     MapSystem mapSystem = null;
-    private void Start()
+    private void Awake()
     {
         if (pixelPerfectPosition)
         {
+            float pixelsPerUnit = positionReference.sprite.pixelsPerUnit;
             Vector3 desiredPosition = transform.localPosition - new Vector3(
-                transform.localPosition.x % (1 / (float)GameSettings.pixelsPerUnit),
-                transform.localPosition.y % (1 / (float)GameSettings.pixelsPerUnit))
+                transform.localPosition.x % (1 / pixelsPerUnit),
+                transform.localPosition.y % (1 / pixelsPerUnit))
             + new Vector3(
-                1 / (float)(2 * GameSettings.pixelsPerUnit),
-                1 / (float)(2 * GameSettings.pixelsPerUnit));
+                1 / (2 * pixelsPerUnit),
+                1 / (2 * pixelsPerUnit),
+                0);
             transform.localPosition = desiredPosition;
         }
         if (loadInstantly)
@@ -56,9 +59,9 @@ public class LevelSetup : MonoBehaviour
         {
             mapSystem.fade.FadeIn();
         }
-        StartCoroutine(WaitForFadeout());
+        StartCoroutine(WaitForFadeIn());
     }
-    IEnumerator WaitForFadeout()
+    IEnumerator WaitForFadeIn()
     {
         yield return new WaitForSeconds(GameSettings.fadeInTime);
         DontDestroyOnLoad(gameObject);
@@ -70,15 +73,15 @@ public class LevelSetup : MonoBehaviour
         battleSystem = GameObject.FindWithTag("GameController").GetComponent<BattleSystem>();
         if (battleSystem)
         {
-            print(level);
-            battleSystem.StartGame(level);
-            Destroy(gameObject);
+            if (!battleSystem.started)
+            {
+                battleSystem.StartGame(level);
+                FindObjectOfType<Fade>().FadeOut();
+                Destroy(gameObject);
+            }
         }
-        else
-        {
-            yield return new WaitForEndOfFrame();
-            StartCoroutine(StartBattleSystem());
-        }
+        yield return new WaitForEndOfFrame();
         GameSettings.isFading = false;
+        StartCoroutine(StartBattleSystem());
     }
 }

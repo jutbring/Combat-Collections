@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class BattleHUD : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class BattleHUD : MonoBehaviour
     [SerializeField] Slider hpSliderSlow = null;
     [SerializeField] float fillSpeed = 1f;
     [SerializeField] Image fillImage = null;
+    [SerializeField] Image fillSlowImage = null;
     [SerializeField] Gradient healthGradient = null;
+    [SerializeField] Gradient healthSlowGradient = null;
     [SerializeField] Animator blockingIndicator = null;
     [SerializeField] Animator chargingIndicator = null;
     [SerializeField] Animator poisonedIndicator = null;
@@ -58,22 +61,26 @@ public class BattleHUD : MonoBehaviour
             lastBurningAmount = unit.burning;
             UseIndicator(burningIndicator);
         }
+        if (unit.currentHealth == 0)
+        {
+            hpSliderSlow.value = 0;
+        }
     }
     void SetHP()
     {
-        fillImage.color = healthGradient.Evaluate(hpSlider.value / hpSlider.maxValue);
-
         bool hpReducing = hpSlider.value >= unit.currentHealth;
         if (hpReducing)
         {
             hpSlider.value = unit.currentHealth;
-            hpSliderSlow.value = Mathf.Lerp(hpSliderSlow.value, unit.currentHealth, fillSpeed * Time.deltaTime * 100);
+            hpSliderSlow.value = Mathf.Lerp(hpSliderSlow.value, unit.currentHealth, fillSpeed * Time.deltaTime * 100 /* (Mathf.Abs(unit.currentHealth - hpSliderSlow.value) / hpSliderSlow.maxValue)*/);
         }
         else
         {
-            hpSlider.value = Mathf.Lerp(hpSlider.value, unit.currentHealth, fillSpeed * Time.deltaTime * 100);
+            hpSlider.value = Mathf.Lerp(hpSlider.value, unit.currentHealth, fillSpeed * Time.deltaTime * 100 /* (Mathf.Abs(unit.currentHealth - hpSlider.value) / hpSlider.maxValue)*/);
             hpSliderSlow.value = unit.currentHealth;
         }
+        fillImage.color = healthGradient.Evaluate(hpSlider.value / hpSlider.maxValue);
+        fillSlowImage.color = healthSlowGradient.Evaluate(hpSlider.value / hpSlider.maxValue);
     }
     void UpdateIndicator(bool unitActivity, Animator indicatorAnimator, int lastStateIndex)
     {
@@ -96,12 +103,19 @@ public class BattleHUD : MonoBehaviour
             {
                 index++;
             }
-            indicatorAnimator.transform.localPosition = Vector3.Lerp(
-                indicatorAnimator.transform.localPosition,
-                   new Vector3(iconPosX + (iconDistance * effectIndex[index]),
-                   indicatorAnimator.transform.localPosition.y,
-                   indicatorAnimator.transform.localPosition.z),
-                indicatorMoveSpeed * Time.deltaTime * 100);
+            Vector3 desiredPosition = new Vector3(
+                iconPosX + (iconDistance * effectIndex[index]),
+                indicatorAnimator.transform.localPosition.y,
+                indicatorAnimator.transform.localPosition.z);
+            Vector2 pos = indicatorAnimator.transform.localPosition = Vector3.Lerp(
+                  indicatorAnimator.transform.localPosition,
+                  desiredPosition,
+                  indicatorMoveSpeed * Time.deltaTime * 100);
+            if (pos.x + pos.y < 0.05f)
+            {
+                pos = Vector2.zero;
+            }
+            indicatorAnimator.transform.localPosition = pos;
         }
     }
     void UseIndicator(Animator indicatorAnimator)

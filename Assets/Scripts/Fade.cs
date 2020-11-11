@@ -29,6 +29,10 @@ public class Fade : MonoBehaviour
     }
     public void FadeIn()
     {
-        fadeAnimator.SetTrigger("Fade");
+        fadeAnimator.SetTrigger("FadeIn");
+    }
+    public void FadeOut()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
     }
 }

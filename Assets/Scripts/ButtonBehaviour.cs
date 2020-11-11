@@ -31,4 +31,8 @@ public class ButtonBehaviour : MonoBehaviour
             uses = Mathf.Clamp(uses + amount, 0, maxUses - 1);
         }
     }
+    public void SelectButton()
+    {
+        button.Select();
+    }
 }
