@@ -32,8 +32,27 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    attribute: material.Vector1_6F2AB41F
+    path: Visual/Body/HelmetEnemy/Sprite
+    classID: 212
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: material.Vector1_D24C8C6E
-    path: Visual/Body/Helmet/Sprite
+    path: Visual/Body/HelmetEnemy/Sprite
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -55,6 +74,25 @@ AnimationClip:
     path: Visual/Body/Helmet/Sprite
     classID: 212
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Vector1_D24C8C6E
+    path: Visual/Body/Helmet/Sprite
+    classID: 212
+    script: {fileID: 0}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
@@ -64,7 +102,14 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 4270962660
+      path: 4168843823
+      attribute: 2309759420
+      script: {fileID: 0}
+      typeID: 212
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 4168843823
       attribute: 2148731460
       script: {fileID: 0}
       typeID: 212
@@ -73,6 +118,13 @@ AnimationClip:
     - serializedVersion: 2
       path: 4270962660
       attribute: 2309759420
+      script: {fileID: 0}
+      typeID: 212
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 4270962660
+      attribute: 2148731460
       script: {fileID: 0}
       typeID: 212
       customType: 22
@@ -114,8 +166,27 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    attribute: material.Vector1_6F2AB41F
+    path: Visual/Body/HelmetEnemy/Sprite
+    classID: 212
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: material.Vector1_D24C8C6E
-    path: Visual/Body/Helmet/Sprite
+    path: Visual/Body/HelmetEnemy/Sprite
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -134,6 +205,25 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material.Vector1_6F2AB41F
+    path: Visual/Body/Helmet/Sprite
+    classID: 212
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Vector1_D24C8C6E
     path: Visual/Body/Helmet/Sprite
     classID: 212
     script: {fileID: 0}

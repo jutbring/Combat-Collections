@@ -1044,7 +1044,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613716566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.29, y: -1.79, z: 0}
+  m_LocalPosition: {x: -6.29, y: -1.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2579505985949026176}
@@ -2187,7 +2187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806190373}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 1.24, z: 0}
+  m_LocalPosition: {x: 6, y: 0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2579505985949026176}
@@ -2760,7 +2760,7 @@ MonoBehaviour:
   SkippingTimeScale: 4
   introDialogueWaitTime: 1.15
   actionTime: 0.325
-  aftermathTime: 0.85
+  aftermathTime: 0.86
   effectsAnimator: {fileID: 1343803830}
   cameraController: {fileID: 0}
   itemHolder: {fileID: 3827634073363821488, guid: 76cd8f12d111f0e4f9bb6855aaeb8736,
@@ -4883,7 +4883,7 @@ PrefabInstance:
     - target: {fileID: 1988846052660872840, guid: 4204bf6578ae7f84db143b696e0e9ed9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.6796913
+      value: -1.2396913
       objectReference: {fileID: 0}
     - target: {fileID: 1988846052660872840, guid: 4204bf6578ae7f84db143b696e0e9ed9,
         type: 3}

@@ -84,6 +84,7 @@ public class CameraController : MonoBehaviour
     {
         mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, targetPosition, cameraRecoverySpeed * Time.deltaTime * 100 * GameSettings.defaultTimeScale);
         mainCamera.transform.rotation = Quaternion.Lerp(mainCamera.transform.rotation, Quaternion.Euler(0, 0, targetRotation), cameraRecoverySpeed * Time.deltaTime * 100 * GameSettings.defaultTimeScale);
+        mainCamera.orthographicSize = GameSettings.cameraSize;
     }
     public void shakeCamera(float power)
     {
@@ -96,7 +97,7 @@ public class CameraController : MonoBehaviour
     }
     IEnumerator Shake(float power, float scaledPower)
     {
-        int shakeAmount = (int)(scaledPower * 10);
+        int shakeAmount = (int)(scaledPower * (10 / shakePowerMod));
         for (int i = 0; i < shakeAmount; i++)
         {
             if (i == 0)

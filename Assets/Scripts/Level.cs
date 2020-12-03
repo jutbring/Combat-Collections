@@ -9,7 +9,6 @@ public class Level : ScriptableObject
     public List<Item> potentialLoot = new List<Item>();
     public List<GameObject> enemies = new List<GameObject>();
     public Sprite background = null;
-    public AudioClip battleMusicIntro = null;
     public AudioClip battleMusicCalm = null;
     public AudioClip battleMusicIntense = null;
 

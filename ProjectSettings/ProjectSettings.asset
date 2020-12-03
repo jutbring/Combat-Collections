@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: Gyarte_WilliamJ_(Combat&Collections)
+  companyName: severed LMB
+  productName: Combats & Collections
   defaultCursor: {fileID: 2800000, guid: 3508b439f51f6c8499bfd89a6597dc7e, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.19374214, g: 0.14417942, b: 0.2264151, a: 1}

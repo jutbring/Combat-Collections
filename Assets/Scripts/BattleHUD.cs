@@ -21,6 +21,7 @@ public class BattleHUD : MonoBehaviour
     [SerializeField] Animator poisonedIndicator = null;
     [SerializeField] Animator burningIndicator = null;
     [SerializeField] Animator weakenedIndicator = null;
+    [SerializeField] Animator blindedIndicator = null;
     [SerializeField] float iconPosX = 0f;
     [SerializeField] float iconDistance = 1f;
     [SerializeField] float indicatorMoveSpeed = 1f;
@@ -35,8 +36,8 @@ public class BattleHUD : MonoBehaviour
         unit = newUnit;
         dangerFactorText.text = "lvl " + unit.stats.GetDangerFactor();
         nameText.text = unit.unitName;
-        hpSlider.maxValue = unit.stats.maxHealth;
-        hpSliderSlow.maxValue = unit.stats.maxHealth;
+        hpSlider.maxValue = unit.maxHealth;
+        hpSliderSlow.maxValue = unit.maxHealth;
     }
     void Update()
     {
@@ -51,6 +52,7 @@ public class BattleHUD : MonoBehaviour
         UpdateIndicator(unit.poisoned > 0, poisonedIndicator, 2);
         UpdateIndicator(unit.burning > 0, burningIndicator, 3);
         UpdateIndicator(unit.weakened, weakenedIndicator, 4);
+        UpdateIndicator(unit.blinded, blindedIndicator, 5);
         if (lastPoisonAmount != unit.poisoned)
         {
             lastPoisonAmount = unit.poisoned;
@@ -79,8 +81,8 @@ public class BattleHUD : MonoBehaviour
             hpSlider.value = Mathf.Lerp(hpSlider.value, unit.currentHealth, fillSpeed * Time.deltaTime * 100 /* (Mathf.Abs(unit.currentHealth - hpSlider.value) / hpSlider.maxValue)*/);
             hpSliderSlow.value = unit.currentHealth;
         }
-        fillImage.color = healthGradient.Evaluate(hpSlider.value / hpSlider.maxValue);
-        fillSlowImage.color = healthSlowGradient.Evaluate(hpSlider.value / hpSlider.maxValue);
+        fillImage.color = healthGradient.Evaluate(hpSliderSlow.value / Mathf.Max(hpSliderSlow.maxValue, 10));
+        fillSlowImage.color = healthSlowGradient.Evaluate(hpSlider.value / Mathf.Max(hpSlider.maxValue, 10));
     }
     void UpdateIndicator(bool unitActivity, Animator indicatorAnimator, int lastStateIndex)
     {
@@ -104,17 +106,13 @@ public class BattleHUD : MonoBehaviour
                 index++;
             }
             Vector3 desiredPosition = new Vector3(
-                iconPosX + (iconDistance * effectIndex[index]),
+                iconPosX + (iconDistance * effectIndex[index] % 7),
                 indicatorAnimator.transform.localPosition.y,
                 indicatorAnimator.transform.localPosition.z);
             Vector2 pos = indicatorAnimator.transform.localPosition = Vector3.Lerp(
                   indicatorAnimator.transform.localPosition,
                   desiredPosition,
                   indicatorMoveSpeed * Time.deltaTime * 100);
-            if (pos.x + pos.y < 0.05f)
-            {
-                pos = Vector2.zero;
-            }
             indicatorAnimator.transform.localPosition = pos;
         }
     }

@@ -27,8 +27,8 @@ MonoBehaviour:
   ignitionChance: 0
   ignitionStrength: 0
   ignitionAmount: 0
-  resistance: 0
+  missChance: 2.5
+  resistance: 1
   blockStrength: 0
-  maxHealth: 0
-  healStrength: 0
+  healStrength: 25
   upgradeItem: {fileID: 0}

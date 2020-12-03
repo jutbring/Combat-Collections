@@ -17,6 +17,7 @@ public class GameSettings : MonoBehaviour
     [Header("Volumes")]
     public static float musicVolume = 0.5f;
     public static float effectsVolume = 0.5f;
+    public static float musicTime = 0f;
 
     [Header("Other")]
     public static float defaultTimeScale = 1f;
@@ -24,6 +25,8 @@ public class GameSettings : MonoBehaviour
     public static bool isFading = false;
     public static int pixelsPerUnit = 16;
     public static float itemMouseReach = 1f;
+    public static float cameraSize = 6f;
+    public static float damageScale = 1f;
     public enum Scenes { Map, Battle };
 
     public static Sound GetAudioClip(string clipName)
@@ -34,7 +37,7 @@ public class GameSettings : MonoBehaviour
     public static Vector3 GetSpriteOffset(Sprite sprite)
     {
         float itemSize = sprite.pivot.x + sprite.pivot.y;
-        Vector2 offset = new Vector2(0, -(sprite.pivot.x - sprite.pivot.y) / itemSize);
+        Vector2 offset = new Vector2(sprite.pivot.y * (1 / pixelsPerUnit), -(sprite.pivot.x - sprite.pivot.y) / itemSize);
         return offset;
     }
 }

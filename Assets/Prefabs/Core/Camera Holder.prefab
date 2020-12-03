@@ -47,11 +47,11 @@ MonoBehaviour:
   mainCamera: {fileID: 5868505543890525700}
   fPSText: {fileID: 5868505545641456214}
   cameraOffset: {x: 0, y: 0, z: -1000}
-  cameraRecoverySpeed: 0.4
+  cameraRecoverySpeed: 0.3
   shakePowerReduce: 0.55
   shakeTime: 0.045
-  shakePowerMod: 1.25
-  shakeRotationMod: 2.5
+  shakePowerMod: 1
+  shakeRotationMod: 5
   displaysFps: 1
 --- !u!1 &5868505543762825505
 GameObject:
@@ -196,7 +196,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.36078432, g: 0.6666667, b: 0.8078432, a: 0}
+  m_BackGroundColor: {r: 0.36078432, g: 0.6666667, b: 0.80784315, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

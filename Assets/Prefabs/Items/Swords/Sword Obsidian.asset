@@ -15,20 +15,22 @@ MonoBehaviour:
   itemType: 1
   itemSprite: {fileID: 21300000, guid: 9c13b8dbbc4753046b7accbd28099446, type: 3}
   dangerFactor: 1
-  damage: 8
+  damage: 40
   weakeningChance: 0
   weakeningStrength: 0
-  critChance: 7.5
-  critStrength: 0.75
-  chargeStrength: 1.1
+  critChance: 8.5
+  critStrength: 0.3
+  chargeStrength: 0.25
   poisonChance: 0
   poisonStrength: 0
   poisonAmount: 0
-  ignitionChance: 15
-  ignitionStrength: 5
-  ignitionAmount: 3
+  ignitionChance: 20
+  ignitionStrength: 22
+  ignitionAmount: 2
+  missChance: 0
+  blindingChance: 0
+  blindingStrength: 0
   resistance: 0
   blockStrength: 0
-  maxHealth: 0
   healStrength: 0
-  upgradeItem: {fileID: 0}
+  upgradeItem: {fileID: 11400000, guid: b9efdee4c8ba9574686fca7b8ac32ba1, type: 2}

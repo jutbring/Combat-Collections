@@ -27,8 +27,10 @@ MonoBehaviour:
   ignitionChance: 0
   ignitionStrength: 0
   ignitionAmount: 0
-  resistance: 0.25
-  blockStrength: 0.5
-  maxHealth: 25
-  healStrength: 15
-  upgradeItem: {fileID: 0}
+  missChance: 0
+  blindingChance: 0
+  blindingStrength: 0
+  resistance: 1.65
+  blockStrength: 0.75
+  healStrength: 20
+  upgradeItem: {fileID: 11400000, guid: 40536f3dc783f4d488c7d17cb88dc979, type: 2}

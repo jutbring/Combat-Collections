@@ -16,7 +16,7 @@ public class LevelSetup : MonoBehaviour
     [SerializeField] TMP_Text levelText = null;
 
     BattleSystem battleSystem = null;
-    MapSystem mapSystem = null;
+    MapSystem1 mapSystem = null;
     private void Awake()
     {
         if (pixelPerfectPosition)
@@ -48,17 +48,7 @@ public class LevelSetup : MonoBehaviour
         transform.localScale = new Vector3(1, 1, 1);
         if (GameSettings.isFading)
             return;
-        GameSettings.isFading = true;
-        battleSystem = GameObject.FindWithTag("GameController").GetComponent<BattleSystem>();
-        if (battleSystem)
-        {
-            battleSystem.fade.FadeIn();
-        }
-        mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem>();
-        if (mapSystem)
-        {
-            mapSystem.fade.FadeIn();
-        }
+        FindObjectOfType<Fade>().FadeIn();
         StartCoroutine(WaitForFadeIn());
     }
     IEnumerator WaitForFadeIn()
@@ -81,7 +71,6 @@ public class LevelSetup : MonoBehaviour
             }
         }
         yield return new WaitForEndOfFrame();
-        GameSettings.isFading = false;
         StartCoroutine(StartBattleSystem());
     }
 }

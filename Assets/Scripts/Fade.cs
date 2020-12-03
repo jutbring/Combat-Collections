@@ -6,7 +6,7 @@ public class Fade : MonoBehaviour
 {
     [SerializeField] Animator fadeAnimator = null;
     BattleSystem battleSystem = null;
-    MapSystem mapSystem = null;
+    MapSystem1 mapSystem = null;
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -16,7 +16,7 @@ public class Fade : MonoBehaviour
         if (!battleSystem && !mapSystem)
         {
             battleSystem = GameObject.FindWithTag("GameController").GetComponent<BattleSystem>();
-            mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem>();
+            mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem1>();
         }
         if (battleSystem)
         {
@@ -29,10 +29,12 @@ public class Fade : MonoBehaviour
     }
     public void FadeIn()
     {
+        GameSettings.isFading = true;
         fadeAnimator.SetTrigger("FadeIn");
     }
     public void FadeOut()
     {
+        GameSettings.isFading = false;
         fadeAnimator.SetTrigger("FadeOut");
     }
 }

@@ -162,6 +162,11 @@ PrefabInstance:
       propertyPath: m_text
       value: Resume
       objectReference: {fileID: 0}
+    - target: {fileID: 1969751233811234169, guid: 9d2b14629a592404481e1d252f958cb7,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278249983
+      objectReference: {fileID: 0}
     - target: {fileID: 5728185411635438287, guid: 9d2b14629a592404481e1d252f958cb7,
         type: 3}
       propertyPath: m_textInfo.characterCount

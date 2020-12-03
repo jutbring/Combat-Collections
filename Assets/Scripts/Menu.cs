@@ -25,10 +25,11 @@ public class Menu : MonoBehaviour
     [SerializeField] GameObject slotPrefab = null;
     [SerializeField] Vector3 itemMoveSpeed = Vector3.one;
     [SerializeField] GameObject EquipButton = null;
+    [SerializeField] GameObject UnequipButton = null;
     [SerializeField] GameObject RemoveButton = null;
 
     BattleSystem battleSystem = null;
-    MapSystem mapSystem = null;
+    MapSystem1 mapSystem = null;
     int heldItemIndex = -1;
     int selectedItemIndex = -1;
     float timeSinceHold = 0f;
@@ -110,6 +111,7 @@ public class Menu : MonoBehaviour
             {
                 if (i != heldItemIndex)
                     itemSprites[i].transform.localPosition = Vector3.Lerp(itemSprites[i].transform.localPosition, GameSettings.GetSpriteOffset(itemSprites[i].sprite), itemMoveSpeed.x * Time.deltaTime * 100);
+                itemSprites[i].sortingOrder = 200 + i;
                 bool itemInRange = false;
                 if (heldItemIndex > -1)
                     itemInRange = Vector2.Distance(itemSprites[heldItemIndex].transform.position, itemSprites[i].transform.position) < GameSettings.itemMouseReach
@@ -190,7 +192,7 @@ public class Menu : MonoBehaviour
     void MergeItems(int otherItemIndex)
     {
         if (playerInventory.items[heldItemIndex].upgradeItem == null) return;
-        FindObjectOfType<MapSystem>().PlayImpactEffect(2, 2);
+        FindObjectOfType<MapSystem1>().PlayImpactEffect(2, 2);
         playerInventory.items[otherItemIndex] = playerInventory.items[otherItemIndex].upgradeItem;
         playerInventory.items.RemoveAt(heldItemIndex);
         heldItemIndex = -1;
@@ -203,6 +205,7 @@ public class Menu : MonoBehaviour
         {
             if (heldItemIndex > -1)
             {
+                itemSprites[heldItemIndex].sortingOrder = 200 + playerInventory.items.Count + 1;
                 timeSinceHold = Mathf.Pow(Mathf.Clamp(timeSinceHold + itemMoveSpeed.y, 0, itemMoveSpeed.y), itemMoveSpeed.z);
                 Vector3 desiredPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + GameSettings.GetSpriteOffset(itemSprites[heldItemIndex].sprite);
                 desiredPosition.z = -1;
@@ -220,26 +223,36 @@ public class Menu : MonoBehaviour
         {
             bool buttonsVisible = selectedItemIndex > -1;
             RemoveButton.SetActive(buttonsVisible);
+            bool equipped = false;
             if (buttonsVisible)
             {
-                Item comparedSword = playerInventory.GetEquippedItem(Item.itemTypes.Sword);
-                if (comparedSword)
+                switch (playerInventory.items[selectedItemIndex].itemType)
                 {
-                    buttonsVisible = itemSprites[selectedItemIndex].sprite != comparedSword.itemSprite;
-                }
-                Item comparedHelmet = playerInventory.GetEquippedItem(Item.itemTypes.Helmet);
-                if (comparedHelmet)
-                {
-                    buttonsVisible = itemSprites[selectedItemIndex].sprite != comparedHelmet.itemSprite && buttonsVisible;
+                    case Item.itemTypes.Sword:
+                        Item comparedSword = playerInventory.GetEquippedItem(Item.itemTypes.Sword);
+                        if (comparedSword)
+                        {
+                            equipped = itemSprites[selectedItemIndex].sprite == comparedSword.itemSprite;
+                        }
+                        break;
+                    case Item.itemTypes.Helmet:
+                        Item comparedHelmet = playerInventory.GetEquippedItem(Item.itemTypes.Helmet);
+                        if (comparedHelmet)
+                        {
+                            equipped = itemSprites[selectedItemIndex].sprite == comparedHelmet.itemSprite;
+                        }
+                        break;
+                    default: break;
                 }
             }
-            EquipButton.SetActive(buttonsVisible);
+            UnequipButton.SetActive(buttonsVisible && equipped);
+            EquipButton.SetActive(buttonsVisible && !equipped);
         }
     }
     public void EquipItem()
     {
         if (selectedItemIndex < 0) return;
-        FindObjectOfType<MapSystem>().PlayImpactEffect(1, 1);
+        FindObjectOfType<MapSystem1>().PlayImpactEffect(1, 1);
         switch (playerInventory.items[selectedItemIndex].itemType)
         {
             case Item.itemTypes.Helmet:
@@ -253,10 +266,27 @@ public class Menu : MonoBehaviour
         }
         selectedItemIndex = -1;
     }
+    public void UnquipItem()
+    {
+        if (selectedItemIndex < 0) return;
+        FindObjectOfType<MapSystem1>().PlayImpactEffect(0, 0.5f);
+        switch (playerInventory.items[selectedItemIndex].itemType)
+        {
+            case Item.itemTypes.Helmet:
+                playerInventory.UnquipItem(Item.itemTypes.Helmet);
+                break;
+            case Item.itemTypes.Sword:
+                playerInventory.UnquipItem(Item.itemTypes.Sword);
+                break;
+            default:
+                break;
+        }
+        selectedItemIndex = -1;
+    }
     public void RemoveItem()
     {
         if (selectedItemIndex < 0) return;
-        FindObjectOfType<MapSystem>().PlayImpactEffect(0, 0.5f);
+        FindObjectOfType<MapSystem1>().PlayImpactEffect(0, 0.5f);
         playerInventory.items.RemoveAt(selectedItemIndex);
         selectedItemIndex = -1;
         playerInventory.lastItemCount = playerInventory.items.Count;
@@ -274,19 +304,8 @@ public class Menu : MonoBehaviour
     {
         if (GameSettings.isFading)
             return;
-        battleSystem = GameObject.FindWithTag("GameController").GetComponent<BattleSystem>();
-        if (battleSystem)
-        {
-            battleSystem.fade.FadeIn();
-        }
-        else
-        {
-            mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem>();
-            if (mapSystem)
-            {
-                mapSystem.fade.FadeIn();
-            }
-        }
+        Time.timeScale = GameSettings.defaultTimeScale;
+        FindObjectOfType<Fade>().FadeIn();
         StartCoroutine(Load((int)GameSettings.Scenes.Map));
     }
     public void ItemReplaceCancel()
@@ -305,7 +324,7 @@ public class Menu : MonoBehaviour
     }
     public void ResetGame()
     {
-        mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem>();
+        mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem1>();
         if (mapSystem)
         {
             mapSystem.ResetGame();
@@ -314,7 +333,7 @@ public class Menu : MonoBehaviour
     }
     IEnumerator Load(int index)
     {
-        yield return new WaitForSecondsRealtime(GameSettings.fadeInTime);
+        yield return new WaitForSeconds(GameSettings.fadeInTime);
         SceneManager.LoadScene(index);
     }
 }

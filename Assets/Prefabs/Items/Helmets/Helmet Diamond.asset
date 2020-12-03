@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
+  m_Name: Helmet Diamond
+  m_EditorClassIdentifier: 
+  itemType: 2
+  itemSprite: {fileID: 21300000, guid: ea80cd811302b4f438dfe8036dc41df6, type: 3}
+  dangerFactor: 1
+  damage: 0
+  weakeningChance: 0
+  weakeningStrength: 0
+  critChance: 0
+  critStrength: 0
+  chargeStrength: 0
+  poisonChance: 0
+  poisonStrength: 0
+  poisonAmount: 0
+  ignitionChance: 0
+  ignitionStrength: 0
+  ignitionAmount: 0
+  missChance: 0
+  blindingChance: 0
+  blindingStrength: 0
+  resistance: 2
+  blockStrength: 0.8
+  healStrength: 22.5
+  upgradeItem: {fileID: 0}

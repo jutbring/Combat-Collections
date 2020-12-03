@@ -89,6 +89,7 @@ public class BattleSystem : MonoBehaviour
         musicSourceIntense.clip = levelStats.battleMusicIntense;
         musicSourceCalm.Play();
         musicSourceIntense.Play();
+        musicSourceIntense.time = GameSettings.musicTime;
         for (int i = 0; i < backgrounds.Count; i++)
         {
             if (levelStats)
@@ -260,6 +261,8 @@ public class BattleSystem : MonoBehaviour
     }
     void UpdateMusic()
     {
+        if (!started)
+            return;
         if (player && enemy)
         {
             intenseMusic = enemy.stats.GetDangerFactor() >= player.stats.GetDangerFactor() && state != BattleStates.Won;
@@ -285,6 +288,7 @@ public class BattleSystem : MonoBehaviour
                 musicSourceIntense.UnPause();
                 musicSourceCalm.UnPause();
             }
+            GameSettings.musicTime = musicSourceIntense.time;
         }
     }
     IEnumerator SetUpBattle()
@@ -378,7 +382,7 @@ public class BattleSystem : MonoBehaviour
             StartCoroutine(Block(enemy));
             attacknext = true;
         }
-        else if (index < 60 && enemy.currentHealth / enemy.stats.maxHealth < 0.5f)
+        else if (index < 60 && enemy.currentHealth / enemy.maxHealth < 0.5f)
         {
             StartCoroutine(Heal(enemy));
             attacknext = true;
@@ -401,12 +405,19 @@ public class BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(actionTime);
 
-        Vector2 isDead = actor.Attack(target);
-        SetDialogueText(target, "You were hit!", target.unitName + " was hit!");
+        Vector3 isDead = actor.Attack(target);
         if (isDead.x == 1)
             SetDialogueText(target, "You were slain", target.unitName + " was slain");
+        else if (isDead.z == 1)
+        {
+            SetDialogueText(target, actor.unitName + " missed", "You missed");
+        }
+        else
+            SetDialogueText(target, "You were hit!", target.unitName + " was hit!");
         if (isDead.x + isDead.y >= 1)
             PlayImpactEffect(2, 2);
+        else if (isDead.z == 1)
+            PlayImpactEffect(0, 0.5f);
         else
             PlayImpactEffect(1, 1);
 
@@ -532,6 +543,8 @@ public class BattleSystem : MonoBehaviour
         subject.charging = false;
         subject.burning = 0;
         subject.weakened = false;
+        subject.blinded = false;
+        subject.animator.SetBool("Invisible", false);
     }
     void InstantiateEnemy()
     {
@@ -549,7 +562,7 @@ public class BattleSystem : MonoBehaviour
         {
             var droppedItem = Instantiate(itemHolder.gameObject, EnemyBattleStation);
             droppedItem.transform.parent = null;
-            droppedItem.transform.position += new Vector3(0, 0.5f);
+            droppedItem.transform.position += new Vector3(0, 0.8f);
             ItemHolder droppedItemHolder = droppedItem.GetComponent<ItemHolder>();
             List<Item> possibleItems = new List<Item>();
             for (int i = 0; i < levelStats.potentialLoot.Count; i++)
