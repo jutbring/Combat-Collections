@@ -519,7 +519,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396651926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 482290913}
@@ -2736,6 +2736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   optionState: 0
+  battleType: 0
   dialogueText: {fileID: 1116528224}
   playerHUD: {fileID: 482990086047284222}
   enemyHUD: {fileID: 7261472255546686556}
@@ -2775,6 +2776,7 @@ MonoBehaviour:
     type: 3}
   victoryMenu: {fileID: 549999815065599108, guid: 15dadfecbce52fb418958b473e4d1ffe,
     type: 3}
+  bossFightCameraShake: 1
   pauseEffect: {fileID: 4232645001412666728}
   backgroundMovementFactor: 0.7
   backgroundRotationFactor: 1

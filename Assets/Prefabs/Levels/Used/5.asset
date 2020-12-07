@@ -21,5 +21,5 @@ MonoBehaviour:
   - {fileID: 1469674388548084620, guid: dbf91e5a46230d7428735db99277ab53, type: 3}
   - {fileID: 1469674388548084620, guid: c4a89afbb696bbf45b28902fb69eaba7, type: 3}
   background: {fileID: 21300000, guid: 444a6e5b815251543bf9a1c02a88088b, type: 3}
-  battleMusicCalm: {fileID: 8300000, guid: 9965a11e0859c954ea06fe87f83415b1, type: 3}
-  battleMusicIntense: {fileID: 8300000, guid: 101901afce0947943a92f22d59fe808a, type: 3}
+  battleMusicCalm: {fileID: 8300000, guid: b732bc6ca4a9bf746a8c98a909000551, type: 3}
+  battleMusicIntense: {fileID: 8300000, guid: 45d4917aae707984caa9849a68f8273b, type: 3}

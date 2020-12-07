@@ -16,7 +16,6 @@ public class LevelSetup : MonoBehaviour
     [SerializeField] TMP_Text levelText = null;
 
     BattleSystem battleSystem = null;
-    MapSystem1 mapSystem = null;
     private void Awake()
     {
         if (pixelPerfectPosition)

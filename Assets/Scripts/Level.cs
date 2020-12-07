@@ -14,7 +14,14 @@ public class Level : ScriptableObject
 
     public int GetLevelIndex()
     {
-        return int.Parse(name);
+        try
+        {
+            return int.Parse(name);
+        }
+        catch
+        {
+            return -1;
+        }
     }
     public string GetLevelName()
     {

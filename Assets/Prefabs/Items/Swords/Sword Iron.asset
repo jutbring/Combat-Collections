@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
   m_Name: Sword Iron
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemType: 2
   itemSprite: {fileID: 21300000, guid: a9f0741c6001627479f814e8ff66e2ef, type: 3}
   dangerFactor: 1
-  damage: 10
+  damage: 10.5
   weakeningChance: 0
   weakeningStrength: 0
   critChance: 2.5

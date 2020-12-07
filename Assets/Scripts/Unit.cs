@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour
 {
     public string unitName = "Name";
     public bool isPlayer = false;
+    public bool isBoss = false;
     public Inventory inventory = null;
 
     [Header("Stats")]
@@ -52,6 +53,8 @@ public class Unit : MonoBehaviour
     void Awake()
     {
         stats = Item.CreateInstance<Item>();
+        if (isPlayer)
+            stats.itemType = Item.itemTypes.Player;
         animator = GetComponent<Animator>();
         animator.SetBool("Player", isPlayer);
         if (inventory)
@@ -62,11 +65,6 @@ public class Unit : MonoBehaviour
         SetStats(unitStats);
         SetStats(helmet);
         SetStats(sword);
-        if (!isPlayer)
-        {
-            maxHealth += UnityEngine.Random.Range(-5, 5);
-            stats.damage += UnityEngine.Random.Range(-2.5f, 2.5f);
-        }
         currentHealth = maxHealth;
     }
     void SetStats(Item item)
@@ -270,6 +268,9 @@ public class Unit : MonoBehaviour
     public void Heal(float amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        poisoned = 0;
+        burning = 0;
+        blinded = false;
     }
     public void StartAnimation(string trigger) { animator.SetTrigger(trigger); }
     public void DamageParticle() { damageParticle.Play(); }

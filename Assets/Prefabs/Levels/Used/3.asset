@@ -20,6 +20,5 @@ MonoBehaviour:
   - {fileID: 1469674388548084620, guid: 60c095d5224f1144689fb215bf573826, type: 3}
   - {fileID: 1469674388548084620, guid: 60c095d5224f1144689fb215bf573826, type: 3}
   background: {fileID: 21300000, guid: 62ecaf5f270d8a34dad57bf72c5aee0e, type: 3}
-  battleMusicIntro: {fileID: 8300000, guid: 38d826200fc76ef4593d2b200a8d1aa1, type: 3}
-  battleMusicCalm: {fileID: 8300000, guid: 3dfe3d2673850f446910ac036345cbc3, type: 3}
-  battleMusicIntense: {fileID: 8300000, guid: 883bc469ffd3ccf4ba784603af34df83, type: 3}
+  battleMusicCalm: {fileID: 8300000, guid: cd44062f287c1a3499f7ba6216769e2f, type: 3}
+  battleMusicIntense: {fileID: 8300000, guid: 5bf8d7d865c5ae24a8224823aefce34b, type: 3}

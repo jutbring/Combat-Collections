@@ -28,6 +28,8 @@ MonoBehaviour:
   ignitionStrength: 0
   ignitionAmount: 0
   missChance: 2.5
+  blindingChance: 0
+  blindingStrength: 0
   resistance: 1
   blockStrength: 4
   healStrength: 35

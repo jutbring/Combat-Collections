@@ -28,7 +28,6 @@ public class Menu : MonoBehaviour
     [SerializeField] GameObject UnequipButton = null;
     [SerializeField] GameObject RemoveButton = null;
 
-    BattleSystem battleSystem = null;
     MapSystem1 mapSystem = null;
     int heldItemIndex = -1;
     int selectedItemIndex = -1;
@@ -115,7 +114,7 @@ public class Menu : MonoBehaviour
                 bool itemInRange = false;
                 if (heldItemIndex > -1)
                     itemInRange = Vector2.Distance(itemSprites[heldItemIndex].transform.position, itemSprites[i].transform.position) < GameSettings.itemMouseReach
-                        && itemSprites[heldItemIndex].sprite == itemSprites[i].sprite
+                        && playerInventory.items[heldItemIndex].upgradeItem == playerInventory.items[i].upgradeItem
                         && playerInventory.items[heldItemIndex].upgradeItem != null
                         && heldItemIndex != i;
                 bool mouseInRange = Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), itemAnimators[i].transform.position) < GameSettings.itemMouseReach;
@@ -193,8 +192,23 @@ public class Menu : MonoBehaviour
     {
         if (playerInventory.items[heldItemIndex].upgradeItem == null) return;
         FindObjectOfType<MapSystem1>().PlayImpactEffect(2, 2);
+        Sprite oldItemSprite = itemSprites[otherItemIndex].sprite;
         playerInventory.items[otherItemIndex] = playerInventory.items[otherItemIndex].upgradeItem;
         playerInventory.items.RemoveAt(heldItemIndex);
+        switch (playerInventory.items[otherItemIndex].itemType)
+        {
+            case Item.itemTypes.Helmet:
+                if (!playerInventory.GetEquippedItem(Item.itemTypes.Helmet)) break;
+                if (playerInventory.GetEquippedItem(Item.itemTypes.Helmet).itemSprite == oldItemSprite)
+                    playerInventory.EquipItem(playerInventory.items[otherItemIndex]);
+                break;
+            case Item.itemTypes.Sword:
+                if (!playerInventory.GetEquippedItem(Item.itemTypes.Sword)) break;
+                if (playerInventory.GetEquippedItem(Item.itemTypes.Sword).itemSprite == oldItemSprite)
+                    playerInventory.EquipItem(playerInventory.items[otherItemIndex]);
+                break;
+            default: break;
+        }
         heldItemIndex = -1;
         selectedItemIndex = -1;
         CreateSlots();
@@ -252,18 +266,8 @@ public class Menu : MonoBehaviour
     public void EquipItem()
     {
         if (selectedItemIndex < 0) return;
+        playerInventory.EquipItem(playerInventory.items[selectedItemIndex]);
         FindObjectOfType<MapSystem1>().PlayImpactEffect(1, 1);
-        switch (playerInventory.items[selectedItemIndex].itemType)
-        {
-            case Item.itemTypes.Helmet:
-                playerInventory.EquipItem(playerInventory.items[selectedItemIndex]);
-                break;
-            case Item.itemTypes.Sword:
-                playerInventory.EquipItem(playerInventory.items[selectedItemIndex]);
-                break;
-            default:
-                break;
-        }
         selectedItemIndex = -1;
     }
     public void UnquipItem()

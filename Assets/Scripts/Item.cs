@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/New Item", order = 2)]
 public class Item : ScriptableObject
 {
-    public enum itemTypes { Stats, Sword, Helmet, Amulet }
-    public itemTypes itemType = itemTypes.Stats;
+    public enum itemTypes { Player, Enemy, Sword, Helmet, Crystal }
+    public itemTypes itemType = itemTypes.Enemy;
     public Sprite itemSprite = null;
     public int dangerFactor = 0;
     [Header("Offence")]
@@ -36,7 +37,10 @@ public class Item : ScriptableObject
 
     public int GetDangerFactor()
     {
-        dangerFactor = Mathf.RoundToInt((damage * resistance / 2) + (poisonChance / 100 * poisonStrength) + (ignitionChance / 100 * ignitionStrength) + (blindingChance / 100 * (blindingStrength / 100)) + 0.5f);
+        // dangerFactor = Mathf.RoundToInt(((damage + healStrength) / 2 * resistance) + (poisonChance / 100 * poisonStrength * poisonAmount) + (ignitionChance / 100 * ignitionStrength * ignitionAmount) + (blindingChance / 100 * blindingStrength / 100) + 0.5f);
+        // dangerFactor = Mathf.RoundToInt(((damage * resistance) + (poisonChance / 100 * poisonStrength * poisonAmount) + (ignitionChance / 100 * ignitionStrength * ignitionAmount) + (blindingChance / 100 * blindingStrength / 100)) / 2 + 0.5f);
+        dangerFactor = Mathf.RoundToInt((damage + (healStrength - (5 * Convert.ToInt32(itemType == itemTypes.Player)))) * resistance / 3.7f * (1 + (0.1f * Convert.ToInt32(itemType == itemTypes.Enemy))) - 4.5f);
+        dangerFactor = Mathf.Clamp(dangerFactor, 1, 1000);
         return dangerFactor;
     }
 }

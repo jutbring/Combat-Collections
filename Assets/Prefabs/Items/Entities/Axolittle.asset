@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
   m_Name: Axolittle
   m_EditorClassIdentifier: 
-  itemType: 0
+  itemType: 1
   itemSprite: {fileID: 0}
   dangerFactor: 1
   damage: 19
@@ -28,6 +28,8 @@ MonoBehaviour:
   ignitionStrength: 32
   ignitionAmount: 2
   missChance: 2.5
+  blindingChance: 0
+  blindingStrength: 0
   resistance: 0.5
   blockStrength: 3
   healStrength: 25

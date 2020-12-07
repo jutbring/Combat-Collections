@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
   m_Name: Sword Gold
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemType: 2
   itemSprite: {fileID: 21300000, guid: 3a297d885cb6ada42b84c5573aa9e084, type: 3}
   dangerFactor: 1
   damage: 20
@@ -20,7 +20,7 @@ MonoBehaviour:
   weakeningStrength: 0
   critChance: 5
   critStrength: 0.2
-  chargeStrength: 0.2
+  chargeStrength: 0.25
   poisonChance: 0
   poisonStrength: 0
   poisonAmount: 0

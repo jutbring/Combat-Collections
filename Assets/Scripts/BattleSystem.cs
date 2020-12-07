@@ -8,10 +8,12 @@ using UnityEngine.Rendering;
 using Organizer.Audio;
 public enum BattleStates { Start, PlayerTurn, EnemyTurn, Won, Lost }
 public enum Options { None, ActionSelection }
+public enum BattleTypes { TurnBased, Fight }
 public class BattleSystem : MonoBehaviour
 {
     public BattleStates state = BattleStates.Start;
     public Options optionState = Options.None;
+    public BattleTypes battleType = BattleTypes.TurnBased;
 
     [Header("UI Elements")]
     [SerializeField] TMP_Text dialogueText = null;
@@ -50,6 +52,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Menu pauseMenu = null;
     [SerializeField] Menu defeatMenu = null;
     [SerializeField] Menu victoryMenu = null;
+    [SerializeField] float bossFightCameraShake = 1f;
 
     [Header("Visual")]
     [SerializeField] Volume pauseEffect = null;
@@ -71,7 +74,9 @@ public class BattleSystem : MonoBehaviour
     bool victoryMenuSet = false;
     bool musicPlaying = true;
     bool intenseMusic = false;
+    public bool constantIntenseMusic = false;
     Animator pauseMenuAnimator = null;
+    float shakeTimer = 0f;
     private void Start()
     {
         if (FindObjectOfType<LevelSetup>() == null)
@@ -122,6 +127,7 @@ public class BattleSystem : MonoBehaviour
         {
             effectsAnimator = GetComponent<Animator>();
         }
+        effectsAnimator.SetBool("BossFight", battleType == BattleTypes.Fight);
     }
     void Update()
     {
@@ -178,6 +184,15 @@ public class BattleSystem : MonoBehaviour
                     }
                 }
                 break;
+        }
+        if (battleType == BattleTypes.Fight)
+        {
+            shakeTimer = Math.Max(shakeTimer - Time.deltaTime, 0);
+            if (shakeTimer == 0)
+            {
+                PlayLongShake(bossFightCameraShake, 1, 1, bossFightCameraShake);
+                shakeTimer = 1;
+            }
         }
     }
     void GetInputs()
@@ -265,11 +280,11 @@ public class BattleSystem : MonoBehaviour
             return;
         if (player && enemy)
         {
-            intenseMusic = enemy.stats.GetDangerFactor() >= player.stats.GetDangerFactor() && state != BattleStates.Won;
+            intenseMusic = (enemy.stats.GetDangerFactor() >= player.stats.GetDangerFactor() && state != BattleStates.Won) || constantIntenseMusic;
         }
         else
         {
-            intenseMusic = intenseMusic && state != BattleStates.Won;
+            intenseMusic = (intenseMusic && state != BattleStates.Won) || constantIntenseMusic;
         }
         if (musicPlaying)
         {
@@ -594,7 +609,7 @@ public class BattleSystem : MonoBehaviour
             case BattleStates.Won:
                 RemoveEffects(player);
                 DropLoot();
-                if (player.inventory.levelsCleared.Count > levelStats.GetLevelIndex())
+                if (player.inventory.levelsCleared.Count > levelStats.GetLevelIndex() && levelStats.GetLevelIndex() != -1)
                     player.inventory.levelsCleared[levelStats.GetLevelIndex()] = true;
                 else
                     print("Game Completed");
@@ -619,6 +634,10 @@ public class BattleSystem : MonoBehaviour
     {
         effectsAnimator.SetInteger("Strength", effectStrength);
         effectsAnimator.SetTrigger("Impact");
-        cameraController.shakeCamera(shakeStrength);
+        cameraController.shakeCameraImpact(shakeStrength);
+    }
+    public void PlayLongShake(float power, float time, float increase, float maxPower)
+    {
+        cameraController.ShakeCameraLong(power, time, increase, maxPower);
     }
 }

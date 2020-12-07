@@ -226,7 +226,7 @@ public class MapSystem1 : MonoBehaviour
     {
         effectsAnimator.SetInteger("Strength", effectStrength);
         effectsAnimator.SetTrigger("Impact");
-        cameraController.shakeCamera(shakeStrength);
+        cameraController.shakeCameraImpact(shakeStrength);
     }
     public void ResetGame()
     {

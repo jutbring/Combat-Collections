@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
   m_Name: Sword Obsidian
   m_EditorClassIdentifier: 
-  itemType: 1
-  itemSprite: {fileID: 21300000, guid: 9c13b8dbbc4753046b7accbd28099446, type: 3}
+  itemType: 2
+  itemSprite: {fileID: 21300000, guid: 5fadf47eac37bbc47ab1f9755aedae37, type: 3}
   dangerFactor: 1
-  damage: 40
+  damage: 51
   weakeningChance: 0
   weakeningStrength: 0
   critChance: 8.5
   critStrength: 0.3
-  chargeStrength: 0.25
+  chargeStrength: 0.45
   poisonChance: 0
   poisonStrength: 0
   poisonAmount: 0

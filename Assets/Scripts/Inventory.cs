@@ -13,8 +13,8 @@ public class Inventory : ScriptableObject
     public List<bool> levelsCleared = new List<bool>();
     public int lastItemCount = 0;
     public Item.itemTypes lastItemType = Item.itemTypes.Helmet;
-    Item equippedSword = null;
-    Item equippedHelmet = null;
+    public Item equippedSword = null;
+    public Item equippedHelmet = null;
     public bool AddToList(Item item)
     {
         bool added = false;

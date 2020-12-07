@@ -27,7 +27,7 @@ public class GameSettings : MonoBehaviour
     public static float itemMouseReach = 1f;
     public static float cameraSize = 6f;
     public static float damageScale = 1f;
-    public enum Scenes { Map, Battle };
+    public enum Scenes { Map, Battle, Boss };
 
     public static Sound GetAudioClip(string clipName)
     {
@@ -36,8 +36,9 @@ public class GameSettings : MonoBehaviour
     }
     public static Vector3 GetSpriteOffset(Sprite sprite)
     {
+        if (!sprite) return new Vector3(0, 0, 0);
         float itemSize = sprite.pivot.x + sprite.pivot.y;
-        Vector2 offset = new Vector2(sprite.pivot.y * (1 / pixelsPerUnit), -(sprite.pivot.x - sprite.pivot.y) / itemSize);
+        Vector2 offset = new Vector2((sprite.pivot.y / pixelsPerUnit) * (1f / pixelsPerUnit), -(sprite.pivot.x - sprite.pivot.y) / itemSize - ((sprite.pivot.y / pixelsPerUnit) * (1f / pixelsPerUnit)));
         return offset;
     }
 }

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
   m_Name: Lizard
   m_EditorClassIdentifier: 
-  itemType: 0
+  itemType: 1
   itemSprite: {fileID: 0}
   dangerFactor: 1
-  damage: 17.5
+  damage: 20
   weakeningChance: 0
   weakeningStrength: 0
   critChance: 5

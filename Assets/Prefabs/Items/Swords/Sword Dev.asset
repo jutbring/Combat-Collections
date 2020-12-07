@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
   m_Name: Sword Dev
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemType: 2
   itemSprite: {fileID: 21300000, guid: 4e0a41b5127479f4e8b22f4604352656, type: 3}
   dangerFactor: 1
   damage: 1000
@@ -27,9 +27,10 @@ MonoBehaviour:
   ignitionChance: 100
   ignitionStrength: 1
   ignitionAmount: 100
+  missChance: 0
+  blindingChance: 0
+  blindingStrength: 0
   resistance: 0
   blockStrength: 0
-  dodgeChance: 0
-  maxHealth: 0
   healStrength: 0
   upgradeItem: {fileID: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
   m_Name: Sword Iron Long
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemType: 2
   itemSprite: {fileID: 21300000, guid: bcc3cbe771f556143912004875cdd9ea, type: 3}
   dangerFactor: 1
-  damage: 12
+  damage: 10.5
   weakeningChance: 0
   weakeningStrength: 0
   critChance: 2.5
@@ -28,6 +28,8 @@ MonoBehaviour:
   ignitionStrength: 0
   ignitionAmount: 0
   missChance: 0
+  blindingChance: 0
+  blindingStrength: 0
   resistance: 0
   blockStrength: 0
   healStrength: 0
