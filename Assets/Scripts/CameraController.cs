@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
 
     float lastPower = 0f;
     bool canShake = true;
-
+    float shakeTimeLong = 0f;
     void Update()
     {
         GetFrameRate();
@@ -84,19 +84,31 @@ public class CameraController : MonoBehaviour
     {
         mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, targetPosition, cameraRecoverySpeed * Time.deltaTime * 100 * GameSettings.defaultTimeScale);
         mainCamera.transform.rotation = Quaternion.Lerp(mainCamera.transform.rotation, Quaternion.Euler(0, 0, targetRotation), cameraRecoverySpeed * Time.deltaTime * 100 * GameSettings.defaultTimeScale);
+        mainCamera.orthographicSize = GameSettings.cameraSize;
     }
-    public void shakeCamera(float power)
+    public void shakeCameraImpact(float power)
     {
         float scaledPower = power * shakePowerMod;
-        if (scaledPower > lastPower && canShake)
+        if (scaledPower >= lastPower)
         {
             StopAllCoroutines();
-            StartCoroutine(Shake(power, scaledPower));
+            StartCoroutine(Shake(power, scaledPower, 0, 0, false, 100));
         }
     }
-    IEnumerator Shake(float power, float scaledPower)
+    public void ShakeCameraLong(float power, float time, float increase, float maxPower)
     {
-        int shakeAmount = (int)(scaledPower * 10);
+        float scaledPower = power * shakePowerMod;
+        if (time != 0)
+            shakeTimeLong = Time.time + time;
+        if (scaledPower >= lastPower)
+        {
+            StopAllCoroutines();
+            StartCoroutine(Shake(power * increase, Mathf.Min(scaledPower, maxPower), time, increase, true, maxPower));
+        }
+    }
+    IEnumerator Shake(float power, float scaledPower, float time, float increase, bool isLong, float maxPower)
+    {
+        int shakeAmount = (int)(scaledPower * (10 / shakePowerMod));
         for (int i = 0; i < shakeAmount; i++)
         {
             if (i == 0)
@@ -104,7 +116,7 @@ public class CameraController : MonoBehaviour
                 canShake = false;
             }
             lastPower = scaledPower;
-            float shakeTimeScaled = shakeTime * ((1 + (scaledPower / power) / shakePowerMod));
+            float shakeTimeScaled = (shakeTime * ((1 + (scaledPower / power) / shakePowerMod))) / (1 + Convert.ToInt32(isLong));
             float posX = UnityEngine.Random.Range(-1f, 1f);
             float posY = UnityEngine.Random.Range(-1f, 1f);
             float rot = UnityEngine.Random.Range(-1f, 1f);
@@ -117,6 +129,10 @@ public class CameraController : MonoBehaviour
             yield return new WaitForSeconds(shakeTimeScaled);
 
             canShake = true;
+            if (Time.time < shakeTimeLong && isLong)
+            {
+                ShakeCameraLong(power, 0, increase, maxPower);
+            }
             scaledPower *= shakePowerReduce;
         }
     }

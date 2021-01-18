@@ -24,8 +24,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Texture2D_5ED20492:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_E2D4F083:
         m_Texture: {fileID: 2800000, guid: 7a12fd89fe4373a4cb0e8ed439e234d5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_FBF495D5:
+        m_Texture: {fileID: 2800000, guid: 777bdca11fd7fa94d8d76c1d6f250000, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -41,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f4ef6bf5958d5d446add797f6762676c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -86,8 +94,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_627798C9: {r: 0, g: 0, b: 0, a: 0}
+    - Color_68F02466: {r: 0, g: 0, b: 0, a: 0}
     - Color_A2A02950: {r: 1, g: 1, b: 1, a: 1}
-    - Color_E20319A5: {r: 1, g: 1, b: 1, a: 0.078431375}
+    - Color_E20319A5: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

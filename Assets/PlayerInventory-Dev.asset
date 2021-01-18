@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc322c296d8179f4da8822492e0e5106, type: 3}
+  m_Name: PlayerInventory-Dev
+  m_EditorClassIdentifier: 
+  reset: 0
+  starterItems:
+  - {fileID: 11400000, guid: 5c3280220e5c95f4eadbc044a59117d2, type: 2}
+  items:
+  - {fileID: 11400000, guid: e5e3c9fc6bfc37144b5ee3f156dc3342, type: 2}
+  - {fileID: 11400000, guid: 1ed0d66623939c84e9242ad9a6104229, type: 2}
+  maxItems: 16
+  levelsCleared: 010101010101010101010101010101010101010101
+  lastItemCount: 16
+  lastItemType: 2
+  equippedSword: {fileID: 11400000, guid: 9ddfa04c416f5b845b46c2f6055b5980, type: 2}
+  equippedHelmet: {fileID: 11400000, guid: 96ee1c23253947246a5d06cb6f7ecb55, type: 2}
+  hasMerged: 0

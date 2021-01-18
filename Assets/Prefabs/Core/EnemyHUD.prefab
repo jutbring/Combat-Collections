@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1718457030810768060, guid: 5c263a33e967f7b4e92f3087a9152daf,
+        type: 3}
+      propertyPath: blindedIndicator
+      value: 
+      objectReference: {fileID: 7161595256018536800}
     - target: {fileID: 4771372009848622605, guid: 5c263a33e967f7b4e92f3087a9152daf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -112,10 +117,31 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5030865967033444808, guid: 5c263a33e967f7b4e92f3087a9152daf,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6643020964144790978, guid: 5c263a33e967f7b4e92f3087a9152daf,
         type: 3}
       propertyPath: m_Name
       value: EnemyHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 8656882414265461273, guid: 5c263a33e967f7b4e92f3087a9152daf,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656882414265461273, guid: 5c263a33e967f7b4e92f3087a9152daf,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c263a33e967f7b4e92f3087a9152daf, type: 3}
+--- !u!95 &7161595256018536800 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4237189693912203749, guid: 5c263a33e967f7b4e92f3087a9152daf,
+    type: 3}
+  m_PrefabInstance: {fileID: 6462275562702293125}
+  m_PrefabAsset: {fileID: 0}

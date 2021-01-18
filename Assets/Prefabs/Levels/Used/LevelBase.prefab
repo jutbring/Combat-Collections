@@ -48,6 +48,7 @@ MonoBehaviour:
   loadInstantly: 1
   pixelPerfectPosition: 0
   positionReference: {fileID: 0}
+  isBoss: 0
   levelText: {fileID: 4839364409948118309}
 --- !u!1 &8983916620939895399
 GameObject:
@@ -180,6 +181,16 @@ PrefabInstance:
       propertyPath: m_text
       value: x-x
       objectReference: {fileID: 0}
+    - target: {fileID: 1337371304561388536, guid: 2769c6a87cf425b4f95d2be522f68dbd,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337371304561388536, guid: 2769c6a87cf425b4f95d2be522f68dbd,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1337371304823128144, guid: 2769c6a87cf425b4f95d2be522f68dbd,
         type: 3}
       propertyPath: m_Name
@@ -299,7 +310,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 66c42828f8a0e0a41a7e2409fbb45261,
+      objectReference: {fileID: 21300000, guid: b7bb9b19caa8fa84d8d947a283c55536,
         type: 3}
     - target: {fileID: 4025306131656789163, guid: 2769c6a87cf425b4f95d2be522f68dbd,
         type: 3}
@@ -310,6 +321,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852750555544867674, guid: 2769c6a87cf425b4f95d2be522f68dbd,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852750555544867674, guid: 2769c6a87cf425b4f95d2be522f68dbd,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6868205436469881397, guid: 2769c6a87cf425b4f95d2be522f68dbd,
         type: 3}

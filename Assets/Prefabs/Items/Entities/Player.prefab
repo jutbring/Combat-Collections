@@ -47,6 +47,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1418024617819937083, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3217736548744619004, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: ShapeModule.angle
@@ -217,6 +222,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -135
       objectReference: {fileID: 0}
+    - target: {fileID: 4721490451118723715, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5375737775562528127, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: m_Sprite
@@ -240,6 +250,11 @@ PrefabInstance:
     - target: {fileID: 6548859267623264138, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753997264811657021, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7357676392135230889, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
@@ -290,22 +305,12 @@ PrefabInstance:
     - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: damage
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
-        type: 3}
-      propertyPath: sword
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
-        type: 3}
-      propertyPath: helmet
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
@@ -321,7 +326,18 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
-      propertyPath: burning
+      propertyPath: sword
+      value: 
+      objectReference: {fileID: 11400000, guid: 5c3280220e5c95f4eadbc044a59117d2,
+        type: 2}
+    - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: type
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7517398961113736405, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
@@ -393,7 +409,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 746c972e978cb394f8e7d47e091db760,
+      objectReference: {fileID: 21300000, guid: 3fb10e20be638bb42b1e594720beefef,
         type: 3}
     - target: {fileID: 7517743886747460157, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}

@@ -8,10 +8,12 @@ using UnityEngine.Rendering;
 using Organizer.Audio;
 public enum BattleStates { Start, PlayerTurn, EnemyTurn, Won, Lost }
 public enum Options { None, ActionSelection }
+public enum BattleTypes { TurnBased, Fight }
 public class BattleSystem : MonoBehaviour
 {
     public BattleStates state = BattleStates.Start;
     public Options optionState = Options.None;
+    public BattleTypes battleType = BattleTypes.TurnBased;
 
     [Header("UI Elements")]
     [SerializeField] TMP_Text dialogueText = null;
@@ -50,6 +52,9 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Menu pauseMenu = null;
     [SerializeField] Menu defeatMenu = null;
     [SerializeField] Menu victoryMenu = null;
+    [SerializeField] float bossFightCameraShake = 1f;
+    [SerializeField] Item defaultSwordDrop = null;
+    [SerializeField] Item defaultHelmetDrop = null;
 
     [Header("Visual")]
     [SerializeField] Volume pauseEffect = null;
@@ -71,7 +76,9 @@ public class BattleSystem : MonoBehaviour
     bool victoryMenuSet = false;
     bool musicPlaying = true;
     bool intenseMusic = false;
+    public bool constantIntenseMusic = false;
     Animator pauseMenuAnimator = null;
+    float shakeTimer = 0f;
     private void Start()
     {
         if (FindObjectOfType<LevelSetup>() == null)
@@ -81,7 +88,6 @@ public class BattleSystem : MonoBehaviour
     }
     public void StartGame(Level level)
     {
-        started = true;
         Settings();
         currentEnemy = 0;
         levelStats = level;
@@ -89,6 +95,9 @@ public class BattleSystem : MonoBehaviour
         musicSourceIntense.clip = levelStats.battleMusicIntense;
         musicSourceCalm.Play();
         musicSourceIntense.Play();
+        musicSourceIntense.time = GameSettings.musicTime;
+        if (battleType == BattleTypes.Fight)
+            musicSourceIntense.volume = GameSettings.musicVolume;
         for (int i = 0; i < backgrounds.Count; i++)
         {
             if (levelStats)
@@ -97,6 +106,7 @@ public class BattleSystem : MonoBehaviour
             }
         }
         StartCoroutine(SetUpBattle());
+        started = true;
     }
     public void Settings()
     {
@@ -121,6 +131,7 @@ public class BattleSystem : MonoBehaviour
         {
             effectsAnimator = GetComponent<Animator>();
         }
+        effectsAnimator.SetBool("BossFight", battleType == BattleTypes.Fight);
     }
     void Update()
     {
@@ -132,11 +143,18 @@ public class BattleSystem : MonoBehaviour
     }
     void UpdateGameState()
     {
+        if (battleType == BattleTypes.Fight)
+        {
+            if (EnemyBattleStation.childCount <= 0 && started && !gameEnded)
+                StartCoroutine(SpawnNextEnemy());
+            if (!player && started && !gameEnded)
+                EndBattle(BattleStates.Lost);
+        }
         gameEnded = state == BattleStates.Won || state == BattleStates.Lost;
         switch (optionState)
         {
             case Options.ActionSelection:
-                if (!buttonsVisible)
+                if (!buttonsVisible && uiButtons.Count > 0)
                 {
                     for (int i = 0; i < uiButtons.Count; i++)
                     {
@@ -151,7 +169,7 @@ public class BattleSystem : MonoBehaviour
                 }
                 break;
             default:
-                if (buttonsVisible)
+                if (buttonsVisible && uiButtons.Count > 0)
                 {
                     for (int i = 0; i < uiButtons.Count; i++)
                     {
@@ -178,6 +196,16 @@ public class BattleSystem : MonoBehaviour
                 }
                 break;
         }
+        if (battleType == BattleTypes.Fight)
+        {
+            float shakeTime = 0.5f;
+            shakeTimer = Math.Max(shakeTimer - Time.deltaTime, 0);
+            if (shakeTimer == 0 && EnemyBattleStation.childCount > 0)
+            {
+                PlayLongShake(bossFightCameraShake, shakeTime, 1, bossFightCameraShake);
+                shakeTimer = shakeTime;
+            }
+        }
     }
     void GetInputs()
     {
@@ -202,6 +230,7 @@ public class BattleSystem : MonoBehaviour
                 TogglePause();
             }
         }
+        effectsAnimator.SetFloat("TimeScale", Time.timeScale);
     }
     public void TogglePause()
     {
@@ -260,17 +289,25 @@ public class BattleSystem : MonoBehaviour
     }
     void UpdateMusic()
     {
+        if (!started)
+            return;
+        if (constantIntenseMusic && musicSourceIntense.clip != levelStats.bossMusic && levelStats.bossMusic)
+        {
+            musicSourceIntense.clip = levelStats.bossMusic;
+            musicSourceIntense.time = GameSettings.musicTime;
+            musicSourceIntense.Play();
+        }
         if (player && enemy)
         {
-            intenseMusic = enemy.stats.GetDangerFactor() >= player.stats.GetDangerFactor() && state != BattleStates.Won;
+            intenseMusic = (enemy.stats.GetDangerFactor() >= player.stats.GetDangerFactor() && state != BattleStates.Won) || constantIntenseMusic;
         }
         else
         {
-            intenseMusic = intenseMusic && state != BattleStates.Won;
+            intenseMusic = (intenseMusic && state != BattleStates.Won) || constantIntenseMusic;
         }
         if (musicPlaying)
         {
-            musicSourceIntense.volume = Mathf.MoveTowards(musicSourceIntense.volume, (GameSettings.musicVolume * Convert.ToInt32(intenseMusic)), Time.unscaledDeltaTime * GameSettings.musicVolume);
+            musicSourceIntense.volume = Mathf.MoveTowards(musicSourceIntense.volume, GameSettings.musicVolume * Convert.ToInt32(intenseMusic), Time.unscaledDeltaTime * GameSettings.musicVolume / 2);
             musicSourceCalm.volume = GameSettings.musicVolume - musicSourceIntense.volume;
             musicSourceIntense.pitch = Mathf.Clamp(Time.timeScale, 0, 1);
             musicSourceCalm.pitch = musicSourceIntense.pitch;
@@ -285,6 +322,7 @@ public class BattleSystem : MonoBehaviour
                 musicSourceIntense.UnPause();
                 musicSourceCalm.UnPause();
             }
+            GameSettings.musicTime = musicSourceIntense.time;
         }
     }
     IEnumerator SetUpBattle()
@@ -295,7 +333,8 @@ public class BattleSystem : MonoBehaviour
         player.audioOrganizer = audioOrganizer;
         InstantiateEnemy();
 
-        yield return new WaitForSeconds(introDialogueWaitTime);
+        if (enemy.type != Unit.EntityType.Boss)
+            yield return new WaitForSeconds(introDialogueWaitTime);
         StartCoroutine(PlayerTurn());
     }
     Vector2 NewTurn(Unit subject)
@@ -318,6 +357,8 @@ public class BattleSystem : MonoBehaviour
                     uiButtons[i].AddUse(1);
                 }
             }
+            player.animator.SetBool("Invisible", enemy.blinded);
+            enemy.animator.SetBool("Invisible", player.blinded);
         }
         bool effect = (subject.poisoned + subject.burning > 0);
         bool poisonDeath = subject.ApplyEffects(Unit.StatusEffects.Poison);
@@ -378,7 +419,7 @@ public class BattleSystem : MonoBehaviour
             StartCoroutine(Block(enemy));
             attacknext = true;
         }
-        else if (index < 60 && enemy.currentHealth / enemy.stats.maxHealth < 0.5f)
+        else if (index < 60 && enemy.currentHealth / enemy.maxHealth < 0.5f)
         {
             StartCoroutine(Heal(enemy));
             attacknext = true;
@@ -401,12 +442,19 @@ public class BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(actionTime);
 
-        Vector2 isDead = actor.Attack(target);
-        SetDialogueText(target, "You were hit!", target.unitName + " was hit!");
+        Vector3 isDead = actor.Attack(target);
         if (isDead.x == 1)
             SetDialogueText(target, "You were slain", target.unitName + " was slain");
+        else if (isDead.z == 1)
+        {
+            SetDialogueText(target, actor.unitName + " missed", "You missed");
+        }
+        else
+            SetDialogueText(target, "You were hit!", target.unitName + " was hit!");
         if (isDead.x + isDead.y >= 1)
             PlayImpactEffect(2, 2);
+        else if (isDead.z == 1)
+            PlayImpactEffect(0, 0.5f);
         else
             PlayImpactEffect(1, 1);
 
@@ -527,11 +575,15 @@ public class BattleSystem : MonoBehaviour
     }
     void RemoveEffects(Unit subject)
     {
+        if (!subject) return;
         subject.poisoned = 0;
         subject.blocking = false;
         subject.charging = false;
         subject.burning = 0;
         subject.weakened = false;
+        subject.blinded = false;
+        if (subject.animator)
+            subject.animator.SetBool("Invisible", false);
     }
     void InstantiateEnemy()
     {
@@ -549,7 +601,7 @@ public class BattleSystem : MonoBehaviour
         {
             var droppedItem = Instantiate(itemHolder.gameObject, EnemyBattleStation);
             droppedItem.transform.parent = null;
-            droppedItem.transform.position += new Vector3(0, 0.5f);
+            droppedItem.transform.position += new Vector3(0, 0.8f);
             ItemHolder droppedItemHolder = droppedItem.GetComponent<ItemHolder>();
             List<Item> possibleItems = new List<Item>();
             for (int i = 0; i < levelStats.potentialLoot.Count; i++)
@@ -559,13 +611,28 @@ public class BattleSystem : MonoBehaviour
                     possibleItems.Add(levelStats.potentialLoot[i]);
                 }
             }
+            for (int i = 0; i < possibleItems.Count; i++)
+            {
+                for (int j = 0; j < player.inventory.items.Count; j++)
+                {
+                    //  if (player.inventory.items[j].itemSprite == possibleItems[i].itemSprite)
+                    //    possibleItems.RemoveAt(i);
+                    if (i >= possibleItems.Count)
+                    {
+                        break;
+                    }
+                }
+            }
             if (possibleItems.Count > 0)
             {
                 droppedItemHolder.item = (possibleItems[UnityEngine.Random.Range(0, possibleItems.Count)]);
             }
             else
             {
-                droppedItemHolder.item = (player.inventory.items[UnityEngine.Random.Range(0, player.inventory.items.Count)]);
+                if (player.inventory.lastItemType == Item.itemTypes.Sword)
+                    droppedItemHolder.item = defaultHelmetDrop;
+                if (player.inventory.lastItemType == Item.itemTypes.Helmet)
+                    droppedItemHolder.item = defaultSwordDrop;
             }
             droppedItemHolder.battleSystem = this;
             itemHolder = droppedItemHolder;
@@ -573,28 +640,32 @@ public class BattleSystem : MonoBehaviour
     }
     void EndBattle(BattleStates battleResult)
     {
-        state = battleResult;
         optionState = Options.None;
         Time.timeScale = GameSettings.defaultTimeScale;
-        switch (battleResult)
-        {
-            case BattleStates.Won:
-                RemoveEffects(player);
-                DropLoot();
-                if (player.inventory.levelsCleared.Count > levelStats.GetLevelIndex())
-                    player.inventory.levelsCleared[levelStats.GetLevelIndex()] = true;
-                else
-                    print("Game Completed");
-                SetDialogueText(player, "You won the battle!", "");
-                break;
-            case BattleStates.Lost:
-                RemoveEffects(player);
-                InstantiateMenu(defeatMenu);
-                SetDialogueText(player, "You were defeated", "");
-                break;
-            default:
-                break;
-        }
+        if (!gameEnded)
+            switch (battleResult)
+            {
+                case BattleStates.Won:
+                    RemoveEffects(player);
+                    if (battleType == BattleTypes.TurnBased)
+                        DropLoot();
+                    else
+                        InstantiateMenu(victoryMenu);
+                    if (player.inventory.levelsCleared.Count > levelStats.GetLevelIndex() && levelStats.GetLevelIndex() != -1)
+                        player.inventory.levelsCleared[levelStats.GetLevelIndex()] = true;
+                    else
+                        print("Game Completed");
+                    SetDialogueText(player, "You won the battle!", "");
+                    break;
+                case BattleStates.Lost:
+                    RemoveEffects(player);
+                    InstantiateMenu(defeatMenu);
+                    SetDialogueText(player, "You were defeated", "");
+                    break;
+                default:
+                    break;
+            }
+        state = battleResult;
     }
     void InstantiateMenu(Menu menu)
     {
@@ -605,7 +676,13 @@ public class BattleSystem : MonoBehaviour
     public void PlayImpactEffect(int effectStrength, float shakeStrength)
     {
         effectsAnimator.SetInteger("Strength", effectStrength);
-        effectsAnimator.SetTrigger("Impact");
-        cameraController.shakeCamera(shakeStrength);
+        if (effectStrength >= 0)
+            effectsAnimator.SetTrigger("Impact");
+        cameraController.shakeCameraImpact(shakeStrength);
+    }
+    public void PlayLongShake(float power, float time, float increase, float maxPower)
+    {
+        if (cameraController)
+            cameraController.ShakeCameraLong(power, time, increase, maxPower);
     }
 }

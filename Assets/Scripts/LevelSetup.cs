@@ -11,12 +11,12 @@ public class LevelSetup : MonoBehaviour
     [SerializeField] bool loadInstantly = true;
     [SerializeField] bool pixelPerfectPosition = true;
     [SerializeField] SpriteRenderer positionReference = null;
+    public bool isBoss = false;
 
     [Header("Self")]
     [SerializeField] TMP_Text levelText = null;
 
     BattleSystem battleSystem = null;
-    MapSystem mapSystem = null;
     private void Awake()
     {
         if (pixelPerfectPosition)
@@ -48,24 +48,17 @@ public class LevelSetup : MonoBehaviour
         transform.localScale = new Vector3(1, 1, 1);
         if (GameSettings.isFading)
             return;
-        GameSettings.isFading = true;
-        battleSystem = GameObject.FindWithTag("GameController").GetComponent<BattleSystem>();
-        if (battleSystem)
-        {
-            battleSystem.fade.FadeIn();
-        }
-        mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem>();
-        if (mapSystem)
-        {
-            mapSystem.fade.FadeIn();
-        }
+        FindObjectOfType<Fade>().FadeIn();
         StartCoroutine(WaitForFadeIn());
     }
     IEnumerator WaitForFadeIn()
     {
         yield return new WaitForSeconds(GameSettings.fadeInTime);
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene((int)GameSettings.Scenes.Battle);
+        if (!isBoss)
+            SceneManager.LoadScene((int)GameSettings.Scenes.Battle);
+        else
+            SceneManager.LoadScene((int)GameSettings.Scenes.Boss);
         StartCoroutine(StartBattleSystem());
     }
     IEnumerator StartBattleSystem()
@@ -81,7 +74,6 @@ public class LevelSetup : MonoBehaviour
             }
         }
         yield return new WaitForEndOfFrame();
-        GameSettings.isFading = false;
         StartCoroutine(StartBattleSystem());
     }
 }

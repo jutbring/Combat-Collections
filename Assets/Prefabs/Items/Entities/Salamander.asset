@@ -12,23 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
   m_Name: Salamander
   m_EditorClassIdentifier: 
-  itemType: 0
+  itemType: 1
   itemSprite: {fileID: 0}
   dangerFactor: 1
-  damage: 10
+  damage: 19
   weakeningChance: 0
-  weakeningStrength: 2
+  weakeningStrength: 0
   critChance: 5
   critStrength: 1.5
-  chargeStrength: 2
+  chargeStrength: 1.75
   poisonChance: 0
   poisonStrength: 0
   poisonAmount: 0
   ignitionChance: 25
-  ignitionStrength: 6
+  ignitionStrength: 9
   ignitionAmount: 2
-  resistance: 1
+  missChance: 2.5
+  blindingChance: 0
+  blindingStrength: 0
+  resistance: 1.45
   blockStrength: 3
-  maxHealth: 45
-  healStrength: 10
+  healStrength: 25
   upgradeItem: {fileID: 0}

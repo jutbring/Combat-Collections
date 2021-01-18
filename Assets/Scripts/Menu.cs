@@ -25,14 +25,17 @@ public class Menu : MonoBehaviour
     [SerializeField] GameObject slotPrefab = null;
     [SerializeField] Vector3 itemMoveSpeed = Vector3.one;
     [SerializeField] GameObject EquipButton = null;
+    [SerializeField] GameObject UnequipButton = null;
     [SerializeField] GameObject RemoveButton = null;
+    [SerializeField] SpeechBubble speechBubble = null;
+    [SerializeField] Transform mergeTutorialPosition = null;
 
-    BattleSystem battleSystem = null;
-    MapSystem mapSystem = null;
+    MapSystem1 mapSystem = null;
     int heldItemIndex = -1;
     int selectedItemIndex = -1;
     float timeSinceHold = 0f;
     bool isInventory = false;
+    SpeechBubble currentBubble = null;
     private void Start()
     {
         if (firstSelected)
@@ -46,12 +49,14 @@ public class Menu : MonoBehaviour
     {
         if (isInventory)
         {
+            if (currentBubble)
+                Destroy(currentBubble.gameObject);
+            itemSprites.Clear();
+            itemAnimators.Clear();
             foreach (Animator animator in panel.GetComponentsInChildren<Animator>())
             {
                 Destroy(animator.gameObject);
             }
-            itemSprites.Clear();
-            itemAnimators.Clear();
             for (int i = 0; i < playerInventory.maxItems; i++)
             {
                 if (playerInventory.items.Count > i)
@@ -73,7 +78,38 @@ public class Menu : MonoBehaviour
                     itemSprites[i].transform.localPosition = GameSettings.GetSpriteOffset(itemSprites[i].sprite);
                 }
             }
+            if (!playerInventory.hasMerged && type == MenuTypes.MapInventory)
+            {
+                int duplicateAmount = 0;
+                for (int i = 0; i < playerInventory.items.Count; i++)
+                {
+                    itemAnimators[i].SetBool("MergeTutorial", false);
+                    for (int j = 0; j < playerInventory.items.Count; j++)
+                    {
+                        if (playerInventory.items[i].upgradeItem == playerInventory.items[j].upgradeItem && i != j && playerInventory.items[j].upgradeItem != null)
+                        {
+                            itemAnimators[i].SetBool("MergeTutorial", true);
+                            itemAnimators[j].SetBool("MergeTutorial", true);
+                            duplicateAmount += 1;
+                        }
+                    }
+                }
+                bool firstMerge = duplicateAmount >= 2;
+                if (firstMerge)
+                {
+                    string message = "Drag and drop to merge items";
+                    InstantiateMessage(message, mergeTutorialPosition);
+                }
+            }
         }
+    }
+    void InstantiateMessage(string message, Transform position)
+    {
+        if (currentBubble)
+            Destroy(currentBubble.gameObject);
+        SpeechBubble bubble = Instantiate(speechBubble, position).GetComponent<SpeechBubble>();
+        bubble.message = message;
+        currentBubble = bubble;
     }
     Vector3 GetSlotPosition(int index)
     {
@@ -110,10 +146,11 @@ public class Menu : MonoBehaviour
             {
                 if (i != heldItemIndex)
                     itemSprites[i].transform.localPosition = Vector3.Lerp(itemSprites[i].transform.localPosition, GameSettings.GetSpriteOffset(itemSprites[i].sprite), itemMoveSpeed.x * Time.deltaTime * 100);
+                itemSprites[i].sortingOrder = 200 + i;
                 bool itemInRange = false;
                 if (heldItemIndex > -1)
                     itemInRange = Vector2.Distance(itemSprites[heldItemIndex].transform.position, itemSprites[i].transform.position) < GameSettings.itemMouseReach
-                        && itemSprites[heldItemIndex].sprite == itemSprites[i].sprite
+                        && playerInventory.items[heldItemIndex].upgradeItem == playerInventory.items[i].upgradeItem
                         && playerInventory.items[heldItemIndex].upgradeItem != null
                         && heldItemIndex != i;
                 bool mouseInRange = Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), itemAnimators[i].transform.position) < GameSettings.itemMouseReach;
@@ -151,6 +188,8 @@ public class Menu : MonoBehaviour
                             heldItemIndex = i;
                             selectedItemIndex = i;
                         }
+                        itemAnimators[i].SetBool("Equipped", isEquipped);
+                        itemAnimators[i].SetBool("Mergable", itemInRange);
                         if (clickedUp)
                         {
                             if (mouseInRange)
@@ -169,8 +208,6 @@ public class Menu : MonoBehaviour
                                 heldItemIndex = -1;
                             }
                         }
-                        itemAnimators[i].SetBool("Equipped", isEquipped);
-                        itemAnimators[i].SetBool("Mergable", itemInRange);
                         break;
                     default:
                         break;
@@ -190,11 +227,27 @@ public class Menu : MonoBehaviour
     void MergeItems(int otherItemIndex)
     {
         if (playerInventory.items[heldItemIndex].upgradeItem == null) return;
-        FindObjectOfType<MapSystem>().PlayImpactEffect(2, 2);
+        FindObjectOfType<MapSystem1>().PlayImpactEffect(2, 2);
+        Sprite oldItemSprite = itemSprites[otherItemIndex].sprite;
         playerInventory.items[otherItemIndex] = playerInventory.items[otherItemIndex].upgradeItem;
+        switch (playerInventory.items[otherItemIndex].itemType)
+        {
+            case Item.itemTypes.Helmet:
+                if (!playerInventory.GetEquippedItem(Item.itemTypes.Helmet)) break;
+                if (playerInventory.GetEquippedItem(Item.itemTypes.Helmet).itemSprite == oldItemSprite)
+                    playerInventory.EquipItem(playerInventory.items[otherItemIndex]);
+                break;
+            case Item.itemTypes.Sword:
+                if (!playerInventory.GetEquippedItem(Item.itemTypes.Sword)) break;
+                if (playerInventory.GetEquippedItem(Item.itemTypes.Sword).itemSprite == oldItemSprite)
+                    playerInventory.EquipItem(playerInventory.items[otherItemIndex]);
+                break;
+            default: break;
+        }
         playerInventory.items.RemoveAt(heldItemIndex);
         heldItemIndex = -1;
         selectedItemIndex = -1;
+        playerInventory.hasMerged = true;
         CreateSlots();
     }
     void UpdateHeldItem()
@@ -203,6 +256,7 @@ public class Menu : MonoBehaviour
         {
             if (heldItemIndex > -1)
             {
+                itemSprites[heldItemIndex].sortingOrder = 200 + playerInventory.items.Count + 1;
                 timeSinceHold = Mathf.Pow(Mathf.Clamp(timeSinceHold + itemMoveSpeed.y, 0, itemMoveSpeed.y), itemMoveSpeed.z);
                 Vector3 desiredPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + GameSettings.GetSpriteOffset(itemSprites[heldItemIndex].sprite);
                 desiredPosition.z = -1;
@@ -220,33 +274,50 @@ public class Menu : MonoBehaviour
         {
             bool buttonsVisible = selectedItemIndex > -1;
             RemoveButton.SetActive(buttonsVisible);
+            bool equipped = false;
             if (buttonsVisible)
             {
-                Item comparedSword = playerInventory.GetEquippedItem(Item.itemTypes.Sword);
-                if (comparedSword)
+                switch (playerInventory.items[selectedItemIndex].itemType)
                 {
-                    buttonsVisible = itemSprites[selectedItemIndex].sprite != comparedSword.itemSprite;
-                }
-                Item comparedHelmet = playerInventory.GetEquippedItem(Item.itemTypes.Helmet);
-                if (comparedHelmet)
-                {
-                    buttonsVisible = itemSprites[selectedItemIndex].sprite != comparedHelmet.itemSprite && buttonsVisible;
+                    case Item.itemTypes.Sword:
+                        Item comparedSword = playerInventory.GetEquippedItem(Item.itemTypes.Sword);
+                        if (comparedSword)
+                        {
+                            equipped = itemSprites[selectedItemIndex].sprite == comparedSword.itemSprite;
+                        }
+                        break;
+                    case Item.itemTypes.Helmet:
+                        Item comparedHelmet = playerInventory.GetEquippedItem(Item.itemTypes.Helmet);
+                        if (comparedHelmet)
+                        {
+                            equipped = itemSprites[selectedItemIndex].sprite == comparedHelmet.itemSprite;
+                        }
+                        break;
+                    default: break;
                 }
             }
-            EquipButton.SetActive(buttonsVisible);
+            UnequipButton.SetActive(buttonsVisible && equipped);
+            EquipButton.SetActive(buttonsVisible && !equipped);
         }
     }
     public void EquipItem()
     {
         if (selectedItemIndex < 0) return;
-        FindObjectOfType<MapSystem>().PlayImpactEffect(1, 1);
+        playerInventory.EquipItem(playerInventory.items[selectedItemIndex]);
+        FindObjectOfType<MapSystem1>().PlayImpactEffect(1, 1);
+        selectedItemIndex = -1;
+    }
+    public void UnquipItem()
+    {
+        if (selectedItemIndex < 0) return;
+        FindObjectOfType<MapSystem1>().PlayImpactEffect(0, 0.5f);
         switch (playerInventory.items[selectedItemIndex].itemType)
         {
             case Item.itemTypes.Helmet:
-                playerInventory.EquipItem(playerInventory.items[selectedItemIndex]);
+                playerInventory.UnquipItem(Item.itemTypes.Helmet);
                 break;
             case Item.itemTypes.Sword:
-                playerInventory.EquipItem(playerInventory.items[selectedItemIndex]);
+                playerInventory.UnquipItem(Item.itemTypes.Sword);
                 break;
             default:
                 break;
@@ -256,7 +327,7 @@ public class Menu : MonoBehaviour
     public void RemoveItem()
     {
         if (selectedItemIndex < 0) return;
-        FindObjectOfType<MapSystem>().PlayImpactEffect(0, 0.5f);
+        FindObjectOfType<MapSystem1>().PlayImpactEffect(0, 0.5f);
         playerInventory.items.RemoveAt(selectedItemIndex);
         selectedItemIndex = -1;
         playerInventory.lastItemCount = playerInventory.items.Count;
@@ -268,25 +339,14 @@ public class Menu : MonoBehaviour
             return;
         levelRestarter = Instantiate(levelRestarter.gameObject, transform).GetComponent<LevelSetup>();
         levelRestarter.level = instantiator.levelStats;
-
+        levelRestarter.isBoss = instantiator.levelStats.isBoss;
     }
     public void LoadMap()
     {
         if (GameSettings.isFading)
             return;
-        battleSystem = GameObject.FindWithTag("GameController").GetComponent<BattleSystem>();
-        if (battleSystem)
-        {
-            battleSystem.fade.FadeIn();
-        }
-        else
-        {
-            mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem>();
-            if (mapSystem)
-            {
-                mapSystem.fade.FadeIn();
-            }
-        }
+        Time.timeScale = GameSettings.defaultTimeScale;
+        FindObjectOfType<Fade>().FadeIn();
         StartCoroutine(Load((int)GameSettings.Scenes.Map));
     }
     public void ItemReplaceCancel()
@@ -305,7 +365,7 @@ public class Menu : MonoBehaviour
     }
     public void ResetGame()
     {
-        mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem>();
+        mapSystem = GameObject.FindWithTag("GameController").GetComponent<MapSystem1>();
         if (mapSystem)
         {
             mapSystem.ResetGame();
@@ -314,7 +374,7 @@ public class Menu : MonoBehaviour
     }
     IEnumerator Load(int index)
     {
-        yield return new WaitForSecondsRealtime(GameSettings.fadeInTime);
+        yield return new WaitForSeconds(GameSettings.fadeInTime);
         SceneManager.LoadScene(index);
     }
 }

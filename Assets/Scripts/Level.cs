@@ -9,13 +9,21 @@ public class Level : ScriptableObject
     public List<Item> potentialLoot = new List<Item>();
     public List<GameObject> enemies = new List<GameObject>();
     public Sprite background = null;
-    public AudioClip battleMusicIntro = null;
     public AudioClip battleMusicCalm = null;
     public AudioClip battleMusicIntense = null;
+    public AudioClip bossMusic = null;
+    public bool isBoss = false;
 
     public int GetLevelIndex()
     {
-        return int.Parse(name);
+        try
+        {
+            return int.Parse(name);
+        }
+        catch
+        {
+            return -1;
+        }
     }
     public string GetLevelName()
     {

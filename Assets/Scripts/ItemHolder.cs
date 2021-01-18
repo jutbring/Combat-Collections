@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ItemHolder : MonoBehaviour
 {
@@ -8,12 +9,14 @@ public class ItemHolder : MonoBehaviour
     public BattleSystem battleSystem = null;
     public Animator animator = null;
     [SerializeField] SpriteRenderer spriteRenderer = null;
+    [SerializeField] MeshRenderer crystalMesh = null;
     [SerializeField] AnimationCurve moveSpeed = null;
     [SerializeField] AnimationCurve heightOffet = null;
     [SerializeField] AnimationCurve rotation = null;
     [SerializeField] float animationTime = 2f;
     [SerializeField] Inventory targetInventory = null;
     [SerializeField] ParticleSystem pickupEffect = null;
+    [SerializeField] ParticleSystem crystalEffect = null;
     [SerializeField] float timeUntilSpeechBubble = 1f;
     [SerializeField] bool seekPlayer = true;
     [SerializeField] Menu inventoryMenu = null;
@@ -28,6 +31,7 @@ public class ItemHolder : MonoBehaviour
     Menu inventory = null;
     GameObject speechBubble = null;
     public int itemToReplace = -1;
+    bool isCrystal = false;
     void Start()
     {
         SetValues();
@@ -42,7 +46,19 @@ public class ItemHolder : MonoBehaviour
         startPosition = transform.position;
         spriteRenderer.sprite = item.itemSprite;
         spriteRenderer.transform.localPosition = GameSettings.GetSpriteOffset(spriteRenderer.sprite);
-        player = GameObject.FindWithTag("Player").transform;
+        isCrystal = item.itemType == Item.itemTypes.Crystal;
+        animator.SetBool("isCrystal", isCrystal);
+        var setPlayer = GameObject.FindWithTag("Player");
+        if (setPlayer)
+            player = setPlayer.transform;
+        if (!isCrystal)
+            crystalMesh.enabled = false;
+        else
+        {
+            crystalEffect.Play();
+            player = Camera.main.transform;
+            // transform.parent = player.transform;
+        }
     }
     private void Update()
     {
@@ -78,7 +94,7 @@ public class ItemHolder : MonoBehaviour
         if (clicked)
         {
             bool inventoryFull = targetInventory.items.Count >= targetInventory.maxItems && itemToReplace < 0;
-            if (inventoryFull)
+            if (inventoryFull && !isCrystal)
             {
                 InstantiateMessage("Inventory full!");
                 inventory = Instantiate(inventoryMenu.gameObject, battleSystem.transform).GetComponent<Menu>();
@@ -113,7 +129,10 @@ public class ItemHolder : MonoBehaviour
     }
     void StartPickup()
     {
-        animator.SetTrigger("Pickup");
+        if (isCrystal)
+            animator.SetTrigger("Implode");
+        else
+            animator.SetTrigger("Pickup");
         clicked = false;
     }
     void UpdateTime()
@@ -142,9 +161,20 @@ public class ItemHolder : MonoBehaviour
     }
     public void PickupEffect()
     {
-        pickupEffect.Play();
-        pickupEffect.transform.parent = null;
-        battleSystem.PlayImpactEffect(1, 1);
+        if (!isCrystal)
+        {
+            pickupEffect.Play();
+            pickupEffect.transform.parent = null;
+            battleSystem.PlayImpactEffect(1, 1);
+        }
+        else
+        {
+            if (battleSystem)
+            {
+                battleSystem.constantIntenseMusic = true;
+                battleSystem.PlayLongShake(0.1f, 10f, 1.12f, 10f);
+            }
+        }
     }
     void PickupItem()
     {
@@ -159,6 +189,16 @@ public class ItemHolder : MonoBehaviour
         }
         if (picked)
             Destroy(gameObject);
+    }
+    public IEnumerator Implode()
+    {
+        GameObject.FindObjectOfType<Fade>().FadeIn();
+        yield return new WaitForSeconds(GameSettings.fadeInTime);
+        transform.parent = null;
+        DontDestroyOnLoad(gameObject);
+        SceneManager.LoadScene((int)GameSettings.Scenes.Boss);
+        GameObject.FindObjectOfType<Fade>().FadeOut();
+        Destroy(gameObject);
     }
     public void AllowPickup()
     {

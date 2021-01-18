@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 978692510460005563, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_Name
+      value: HelmetEnemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1251485087715679779, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: health
@@ -16,6 +21,31 @@ PrefabInstance:
         type: 3}
       propertyPath: damage
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418024617819937083, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.08715578
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418024617819937083, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9961947
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418024617819937083, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418024617819937083, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.175
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418024617819937083, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.163
       objectReference: {fileID: 0}
     - target: {fileID: 1885617647844848797, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
@@ -87,6 +117,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 5375737775562528127, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5375737775562528127, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5375737775562528127, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5745638794611777060, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -121,6 +166,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 33.669003
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220119606392136839, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_Name
+      value: SwordEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 6548859267623264138, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
@@ -181,7 +231,7 @@ PrefabInstance:
     - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
       propertyPath: maxHealth
-      value: 15
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
@@ -198,6 +248,11 @@ PrefabInstance:
         type: 3}
       propertyPath: bossMusic
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517398961113736404, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: sword
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7517398961113736405, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
@@ -273,7 +328,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 058c59c65841e404e88255f0b3b63b4e,
+      objectReference: {fileID: 21300000, guid: 48c80c8dfd0828440bbf462f267084dc,
         type: 3}
     - target: {fileID: 7517743886747460157, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}
@@ -334,6 +389,21 @@ PrefabInstance:
         type: 3}
       propertyPath: poisonStrength
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8370846814565775350, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 8370846814565775350, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.16420406
+      objectReference: {fileID: 0}
+    - target: {fileID: 8370846814565775350, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 18.902
       objectReference: {fileID: 0}
     - target: {fileID: 8986159127937227252, guid: a05fcc9bcfb43a44ba30a1ce3ebc5471,
         type: 3}

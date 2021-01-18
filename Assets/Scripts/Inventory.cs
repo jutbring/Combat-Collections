@@ -7,13 +7,15 @@ public class Inventory : ScriptableObject
 {
     public bool reset = true;
     [Header("Inventory")]
+    public List<Item> starterItems = new List<Item>();
     public List<Item> items = new List<Item>();
     public int maxItems = 16;
     public List<bool> levelsCleared = new List<bool>();
     public int lastItemCount = 0;
     public Item.itemTypes lastItemType = Item.itemTypes.Helmet;
-    Item equippedSword = null;
-    Item equippedHelmet = null;
+    public Item equippedSword = null;
+    public Item equippedHelmet = null;
+    public bool hasMerged = false;
     public bool AddToList(Item item)
     {
         bool added = false;
@@ -60,6 +62,20 @@ public class Inventory : ScriptableObject
                 break;
             case Item.itemTypes.Sword:
                 equippedSword = item;
+                break;
+            default:
+                break;
+        }
+    }
+    public void UnquipItem(Item.itemTypes itemType)
+    {
+        switch (itemType)
+        {
+            case Item.itemTypes.Helmet:
+                equippedHelmet = null;
+                break;
+            case Item.itemTypes.Sword:
+                equippedSword = null;
                 break;
             default:
                 break;
@@ -112,8 +128,13 @@ public class Inventory : ScriptableObject
         levelsCleared.Clear();
         equippedHelmet = null;
         equippedSword = null;
-        lastItemCount = 0;
-        lastItemType = Item.itemTypes.Helmet;
+        lastItemCount = -1;
+        lastItemType = Item.itemTypes.Sword;
         reset = false;
+        hasMerged = false;
+        for (int i = 0; i < starterItems.Count; i++)
+        {
+            items.Add(starterItems[i]);
+        }
     }
 }
