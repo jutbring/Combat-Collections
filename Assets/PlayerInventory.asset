@@ -12,29 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc322c296d8179f4da8822492e0e5106, type: 3}
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
-  reset: 0
+  reset: 1
   starterItems:
   - {fileID: 11400000, guid: 5c3280220e5c95f4eadbc044a59117d2, type: 2}
   items:
-  - {fileID: 11400000, guid: 5c3280220e5c95f4eadbc044a59117d2, type: 2}
-  - {fileID: 11400000, guid: a50dc1cfc803552488591bfd6bf82de8, type: 2}
   - {fileID: 11400000, guid: 1208a1efd597b0c47920a8265a0c8583, type: 2}
+  - {fileID: 11400000, guid: a50dc1cfc803552488591bfd6bf82de8, type: 2}
   - {fileID: 11400000, guid: 439784f1b25d0124e9986ab194cae3fb, type: 2}
-  - {fileID: 11400000, guid: e5e3c9fc6bfc37144b5ee3f156dc3342, type: 2}
-  - {fileID: 11400000, guid: 1ed0d66623939c84e9242ad9a6104229, type: 2}
-  - {fileID: 11400000, guid: d211cc89d0157fe4a8ec60148c4c3286, type: 2}
-  - {fileID: 11400000, guid: c57a0a76482e4d94b96ca9db24faa0c5, type: 2}
-  - {fileID: 11400000, guid: 28dcad84b1bc9184997924ebe95b3143, type: 2}
-  - {fileID: 11400000, guid: 5877da03f5dbf0440b9b0d584d30f0f1, type: 2}
-  - {fileID: 11400000, guid: b9efdee4c8ba9574686fca7b8ac32ba1, type: 2}
-  - {fileID: 11400000, guid: 40536f3dc783f4d488c7d17cb88dc979, type: 2}
-  - {fileID: 11400000, guid: c4f87470db259ae488fd94d06c177106, type: 2}
-  - {fileID: 11400000, guid: 8b1be09d30b098e47868a91e0e8ad2df, type: 2}
-  - {fileID: 11400000, guid: 9ddfa04c416f5b845b46c2f6055b5980, type: 2}
-  - {fileID: 11400000, guid: 96ee1c23253947246a5d06cb6f7ecb55, type: 2}
   maxItems: 16
-  levelsCleared: 0101010101010101010101
-  lastItemCount: 16
-  lastItemType: 2
-  equippedSword: {fileID: 11400000, guid: 9ddfa04c416f5b845b46c2f6055b5980, type: 2}
-  equippedHelmet: {fileID: 11400000, guid: 96ee1c23253947246a5d06cb6f7ecb55, type: 2}
+  levelsCleared: 010101010101010101010101010101010101010101
+  lastItemCount: 3
+  lastItemType: 3
+  equippedSword: {fileID: 11400000, guid: 1208a1efd597b0c47920a8265a0c8583, type: 2}
+  equippedHelmet: {fileID: 11400000, guid: 439784f1b25d0124e9986ab194cae3fb, type: 2}
+  hasMerged: 1

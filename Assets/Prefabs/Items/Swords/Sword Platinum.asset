@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sword Platinum
   m_EditorClassIdentifier: 
   itemType: 2
-  itemSprite: {fileID: 21300000, guid: 3ce7998d98970264badea0fff4d72b3c, type: 3}
+  itemSprite: {fileID: 21300000, guid: 86498b1161754654894d26935bafc8d6, type: 3}
   dangerFactor: 1
   damage: 38
   weakeningChance: 0

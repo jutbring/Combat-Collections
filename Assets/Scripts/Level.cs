@@ -11,6 +11,8 @@ public class Level : ScriptableObject
     public Sprite background = null;
     public AudioClip battleMusicCalm = null;
     public AudioClip battleMusicIntense = null;
+    public AudioClip bossMusic = null;
+    public bool isBoss = false;
 
     public int GetLevelIndex()
     {

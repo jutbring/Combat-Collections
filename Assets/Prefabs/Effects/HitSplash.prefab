@@ -52,7 +52,7 @@ MonoBehaviour:
   image: {fileID: 8854391780145262940}
   sizeUpdateSpeed: 0.5
   sizeOffset: 0.5
-  splash: 1
+  type: 2
   maxTextSize: 350
   textStartSize: 50
 --- !u!95 &6065365650520054785

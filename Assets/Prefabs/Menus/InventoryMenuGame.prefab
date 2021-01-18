@@ -187,7 +187,7 @@ PrefabInstance:
     - target: {fileID: 787879469962367974, guid: 80bf951b6faa7f848aac15ba4f4ceef3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 787879469962367975, guid: 80bf951b6faa7f848aac15ba4f4ceef3,
         type: 3}
@@ -277,12 +277,12 @@ PrefabInstance:
     - target: {fileID: 6458112495610172105, guid: 80bf951b6faa7f848aac15ba4f4ceef3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6707962762222982704, guid: 80bf951b6faa7f848aac15ba4f4ceef3,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -5.5
+      value: -5.375
       objectReference: {fileID: 0}
     - target: {fileID: 6707962762222982704, guid: 80bf951b6faa7f848aac15ba4f4ceef3,
         type: 3}
@@ -294,10 +294,20 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 6707962762222982704, guid: 80bf951b6faa7f848aac15ba4f4ceef3,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 8.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7131472880521139809, guid: 80bf951b6faa7f848aac15ba4f4ceef3,
         type: 3}
       propertyPath: m_Name
       value: InventoryMenuGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 7732140598206542751, guid: 80bf951b6faa7f848aac15ba4f4ceef3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8807410460519997075, guid: 80bf951b6faa7f848aac15ba4f4ceef3,
         type: 3}

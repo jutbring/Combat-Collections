@@ -11,6 +11,7 @@ public class LevelSetup : MonoBehaviour
     [SerializeField] bool loadInstantly = true;
     [SerializeField] bool pixelPerfectPosition = true;
     [SerializeField] SpriteRenderer positionReference = null;
+    public bool isBoss = false;
 
     [Header("Self")]
     [SerializeField] TMP_Text levelText = null;
@@ -54,7 +55,10 @@ public class LevelSetup : MonoBehaviour
     {
         yield return new WaitForSeconds(GameSettings.fadeInTime);
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene((int)GameSettings.Scenes.Battle);
+        if (!isBoss)
+            SceneManager.LoadScene((int)GameSettings.Scenes.Battle);
+        else
+            SceneManager.LoadScene((int)GameSettings.Scenes.Boss);
         StartCoroutine(StartBattleSystem());
     }
     IEnumerator StartBattleSystem()

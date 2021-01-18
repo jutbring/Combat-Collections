@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 1
   itemSprite: {fileID: 0}
   dangerFactor: 1
-  damage: 45
+  damage: 44
   weakeningChance: 10
   weakeningStrength: 2
   critChance: 6
@@ -30,7 +30,7 @@ MonoBehaviour:
   missChance: 2.5
   blindingChance: 0
   blindingStrength: 0
-  resistance: 3.5
+  resistance: 3.875
   blockStrength: 5
   healStrength: 25
   upgradeItem: {fileID: 0}

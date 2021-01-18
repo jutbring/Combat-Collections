@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sword Final
   m_EditorClassIdentifier: 
   itemType: 2
-  itemSprite: {fileID: 21300000, guid: 096efbcd10d468b48aac8e999b95b448, type: 3}
+  itemSprite: {fileID: 21300000, guid: 3de079d221ac5e041836cb6dde25d832, type: 3}
   dangerFactor: 1
   damage: 113
   weakeningChance: 0

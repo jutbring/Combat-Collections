@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Helmet Final
   m_EditorClassIdentifier: 
   itemType: 3
-  itemSprite: {fileID: 21300000, guid: 83f5174313754c247a10c196c0dfc837, type: 3}
+  itemSprite: {fileID: 21300000, guid: bf9bcaeecb4ee6b4aaefe73a6b3331d7, type: 3}
   dangerFactor: 1
   damage: 2
   weakeningChance: 0

@@ -53,6 +53,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Menu defeatMenu = null;
     [SerializeField] Menu victoryMenu = null;
     [SerializeField] float bossFightCameraShake = 1f;
+    [SerializeField] Item defaultSwordDrop = null;
+    [SerializeField] Item defaultHelmetDrop = null;
 
     [Header("Visual")]
     [SerializeField] Volume pauseEffect = null;
@@ -86,7 +88,6 @@ public class BattleSystem : MonoBehaviour
     }
     public void StartGame(Level level)
     {
-        started = true;
         Settings();
         currentEnemy = 0;
         levelStats = level;
@@ -95,6 +96,8 @@ public class BattleSystem : MonoBehaviour
         musicSourceCalm.Play();
         musicSourceIntense.Play();
         musicSourceIntense.time = GameSettings.musicTime;
+        if (battleType == BattleTypes.Fight)
+            musicSourceIntense.volume = GameSettings.musicVolume;
         for (int i = 0; i < backgrounds.Count; i++)
         {
             if (levelStats)
@@ -103,6 +106,7 @@ public class BattleSystem : MonoBehaviour
             }
         }
         StartCoroutine(SetUpBattle());
+        started = true;
     }
     public void Settings()
     {
@@ -139,11 +143,18 @@ public class BattleSystem : MonoBehaviour
     }
     void UpdateGameState()
     {
+        if (battleType == BattleTypes.Fight)
+        {
+            if (EnemyBattleStation.childCount <= 0 && started && !gameEnded)
+                StartCoroutine(SpawnNextEnemy());
+            if (!player && started && !gameEnded)
+                EndBattle(BattleStates.Lost);
+        }
         gameEnded = state == BattleStates.Won || state == BattleStates.Lost;
         switch (optionState)
         {
             case Options.ActionSelection:
-                if (!buttonsVisible)
+                if (!buttonsVisible && uiButtons.Count > 0)
                 {
                     for (int i = 0; i < uiButtons.Count; i++)
                     {
@@ -158,7 +169,7 @@ public class BattleSystem : MonoBehaviour
                 }
                 break;
             default:
-                if (buttonsVisible)
+                if (buttonsVisible && uiButtons.Count > 0)
                 {
                     for (int i = 0; i < uiButtons.Count; i++)
                     {
@@ -187,11 +198,12 @@ public class BattleSystem : MonoBehaviour
         }
         if (battleType == BattleTypes.Fight)
         {
+            float shakeTime = 0.5f;
             shakeTimer = Math.Max(shakeTimer - Time.deltaTime, 0);
-            if (shakeTimer == 0)
+            if (shakeTimer == 0 && EnemyBattleStation.childCount > 0)
             {
-                PlayLongShake(bossFightCameraShake, 1, 1, bossFightCameraShake);
-                shakeTimer = 1;
+                PlayLongShake(bossFightCameraShake, shakeTime, 1, bossFightCameraShake);
+                shakeTimer = shakeTime;
             }
         }
     }
@@ -218,6 +230,7 @@ public class BattleSystem : MonoBehaviour
                 TogglePause();
             }
         }
+        effectsAnimator.SetFloat("TimeScale", Time.timeScale);
     }
     public void TogglePause()
     {
@@ -278,6 +291,12 @@ public class BattleSystem : MonoBehaviour
     {
         if (!started)
             return;
+        if (constantIntenseMusic && musicSourceIntense.clip != levelStats.bossMusic && levelStats.bossMusic)
+        {
+            musicSourceIntense.clip = levelStats.bossMusic;
+            musicSourceIntense.time = GameSettings.musicTime;
+            musicSourceIntense.Play();
+        }
         if (player && enemy)
         {
             intenseMusic = (enemy.stats.GetDangerFactor() >= player.stats.GetDangerFactor() && state != BattleStates.Won) || constantIntenseMusic;
@@ -288,7 +307,7 @@ public class BattleSystem : MonoBehaviour
         }
         if (musicPlaying)
         {
-            musicSourceIntense.volume = Mathf.MoveTowards(musicSourceIntense.volume, (GameSettings.musicVolume * Convert.ToInt32(intenseMusic)), Time.unscaledDeltaTime * GameSettings.musicVolume);
+            musicSourceIntense.volume = Mathf.MoveTowards(musicSourceIntense.volume, GameSettings.musicVolume * Convert.ToInt32(intenseMusic), Time.unscaledDeltaTime * GameSettings.musicVolume / 2);
             musicSourceCalm.volume = GameSettings.musicVolume - musicSourceIntense.volume;
             musicSourceIntense.pitch = Mathf.Clamp(Time.timeScale, 0, 1);
             musicSourceCalm.pitch = musicSourceIntense.pitch;
@@ -314,7 +333,8 @@ public class BattleSystem : MonoBehaviour
         player.audioOrganizer = audioOrganizer;
         InstantiateEnemy();
 
-        yield return new WaitForSeconds(introDialogueWaitTime);
+        if (enemy.type != Unit.EntityType.Boss)
+            yield return new WaitForSeconds(introDialogueWaitTime);
         StartCoroutine(PlayerTurn());
     }
     Vector2 NewTurn(Unit subject)
@@ -337,6 +357,8 @@ public class BattleSystem : MonoBehaviour
                     uiButtons[i].AddUse(1);
                 }
             }
+            player.animator.SetBool("Invisible", enemy.blinded);
+            enemy.animator.SetBool("Invisible", player.blinded);
         }
         bool effect = (subject.poisoned + subject.burning > 0);
         bool poisonDeath = subject.ApplyEffects(Unit.StatusEffects.Poison);
@@ -553,13 +575,15 @@ public class BattleSystem : MonoBehaviour
     }
     void RemoveEffects(Unit subject)
     {
+        if (!subject) return;
         subject.poisoned = 0;
         subject.blocking = false;
         subject.charging = false;
         subject.burning = 0;
         subject.weakened = false;
         subject.blinded = false;
-        subject.animator.SetBool("Invisible", false);
+        if (subject.animator)
+            subject.animator.SetBool("Invisible", false);
     }
     void InstantiateEnemy()
     {
@@ -587,13 +611,28 @@ public class BattleSystem : MonoBehaviour
                     possibleItems.Add(levelStats.potentialLoot[i]);
                 }
             }
+            for (int i = 0; i < possibleItems.Count; i++)
+            {
+                for (int j = 0; j < player.inventory.items.Count; j++)
+                {
+                    //  if (player.inventory.items[j].itemSprite == possibleItems[i].itemSprite)
+                    //    possibleItems.RemoveAt(i);
+                    if (i >= possibleItems.Count)
+                    {
+                        break;
+                    }
+                }
+            }
             if (possibleItems.Count > 0)
             {
                 droppedItemHolder.item = (possibleItems[UnityEngine.Random.Range(0, possibleItems.Count)]);
             }
             else
             {
-                droppedItemHolder.item = (player.inventory.items[UnityEngine.Random.Range(0, player.inventory.items.Count)]);
+                if (player.inventory.lastItemType == Item.itemTypes.Sword)
+                    droppedItemHolder.item = defaultHelmetDrop;
+                if (player.inventory.lastItemType == Item.itemTypes.Helmet)
+                    droppedItemHolder.item = defaultSwordDrop;
             }
             droppedItemHolder.battleSystem = this;
             itemHolder = droppedItemHolder;
@@ -601,28 +640,32 @@ public class BattleSystem : MonoBehaviour
     }
     void EndBattle(BattleStates battleResult)
     {
-        state = battleResult;
         optionState = Options.None;
         Time.timeScale = GameSettings.defaultTimeScale;
-        switch (battleResult)
-        {
-            case BattleStates.Won:
-                RemoveEffects(player);
-                DropLoot();
-                if (player.inventory.levelsCleared.Count > levelStats.GetLevelIndex() && levelStats.GetLevelIndex() != -1)
-                    player.inventory.levelsCleared[levelStats.GetLevelIndex()] = true;
-                else
-                    print("Game Completed");
-                SetDialogueText(player, "You won the battle!", "");
-                break;
-            case BattleStates.Lost:
-                RemoveEffects(player);
-                InstantiateMenu(defeatMenu);
-                SetDialogueText(player, "You were defeated", "");
-                break;
-            default:
-                break;
-        }
+        if (!gameEnded)
+            switch (battleResult)
+            {
+                case BattleStates.Won:
+                    RemoveEffects(player);
+                    if (battleType == BattleTypes.TurnBased)
+                        DropLoot();
+                    else
+                        InstantiateMenu(victoryMenu);
+                    if (player.inventory.levelsCleared.Count > levelStats.GetLevelIndex() && levelStats.GetLevelIndex() != -1)
+                        player.inventory.levelsCleared[levelStats.GetLevelIndex()] = true;
+                    else
+                        print("Game Completed");
+                    SetDialogueText(player, "You won the battle!", "");
+                    break;
+                case BattleStates.Lost:
+                    RemoveEffects(player);
+                    InstantiateMenu(defeatMenu);
+                    SetDialogueText(player, "You were defeated", "");
+                    break;
+                default:
+                    break;
+            }
+        state = battleResult;
     }
     void InstantiateMenu(Menu menu)
     {
@@ -633,11 +676,13 @@ public class BattleSystem : MonoBehaviour
     public void PlayImpactEffect(int effectStrength, float shakeStrength)
     {
         effectsAnimator.SetInteger("Strength", effectStrength);
-        effectsAnimator.SetTrigger("Impact");
+        if (effectStrength >= 0)
+            effectsAnimator.SetTrigger("Impact");
         cameraController.shakeCameraImpact(shakeStrength);
     }
     public void PlayLongShake(float power, float time, float increase, float maxPower)
     {
-        cameraController.ShakeCameraLong(power, time, increase, maxPower);
+        if (cameraController)
+            cameraController.ShakeCameraLong(power, time, increase, maxPower);
     }
 }

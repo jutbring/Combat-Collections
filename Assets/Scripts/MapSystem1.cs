@@ -34,6 +34,7 @@ public class MapSystem1 : MonoBehaviour
     [SerializeField] Transform speechBubblePosition = null;
     [SerializeField] CameraController cameraController = null;
     [SerializeField] Animator effectsAnimator = null;
+    [SerializeField] AudioSource musicSource = null;
 
     [Header("Visual")]
     [SerializeField] float levelParallax = 0f;
@@ -51,7 +52,7 @@ public class MapSystem1 : MonoBehaviour
     Vector3 desiredPosition = new Vector3(0, 0, 0);
     int selectedLevel = 0;
     void Start()
-    {
+    {     
         GameSettings.musicTime = 0;
         if (playerInventory.reset)
         {
@@ -90,23 +91,6 @@ public class MapSystem1 : MonoBehaviour
             fade.FadeOut();
         }
     }
-
-    void Update()
-    {
-        GetInputs();
-        UpdateMap();
-        UpdateInventory();
-    }
-    void GetInputs()
-    {
-        for (int i = 0; i < GameSettings.inventoryKeys.Count; i++)
-        {
-            if (Input.GetKeyDown(GameSettings.inventoryKeys[i]) && inventory == null)
-            {
-                InstantiateInventory();
-            }
-        }
-    }
     public void InstantiateInventory()
     {
         if (inventory != null)
@@ -131,7 +115,30 @@ public class MapSystem1 : MonoBehaviour
         if (speechBubble)
             speechBubble.SetActive(false);
     }
-
+    void Update()
+    {
+        GetInputs();
+        UpdateMusic();
+        UpdateMap();
+        UpdateInventory();
+    }
+    void GetInputs()
+    {
+        for (int i = 0; i < GameSettings.inventoryKeys.Count; i++)
+        {
+            if (Input.GetKeyDown(GameSettings.inventoryKeys[i]) && inventory == null)
+            {
+                InstantiateInventory();
+            }
+        }
+    }
+    void UpdateMusic()
+    {
+        if (!musicSource.isPlaying)
+            musicSource.Play();
+        musicSource.volume = Mathf.MoveTowards(musicSource.volume, GameSettings.musicVolume, Time.unscaledDeltaTime * GameSettings.musicVolume / 2);
+        musicSource.pitch = Mathf.Clamp(Time.timeScale, 0, 1);
+    }
     void UpdateMap()
     {
         if (resetPanel)
@@ -215,7 +222,7 @@ public class MapSystem1 : MonoBehaviour
         }
         if (inventory)
         {
-            dialogueText.text = @"Press ""I"" to toggle your Inventory";
+            dialogueText.text = @"Press """ + GameSettings.inventoryKeys[GameSettings.inventoryKeys.Count - 1].ToString() + @""" to toggle your Inventory";
         }
         else
         {

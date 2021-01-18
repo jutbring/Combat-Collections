@@ -33,4 +33,4 @@ MonoBehaviour:
   resistance: 100
   blockStrength: 2
   healStrength: 100
-  upgradeItem: {fileID: 11400000, guid: 439784f1b25d0124e9986ab194cae3fb, type: 2}
+  upgradeItem: {fileID: 0}

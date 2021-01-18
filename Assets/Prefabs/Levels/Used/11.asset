@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorial: 0
   potentialLoot:
-  - {fileID: 11400000, guid: 7168e37cdd19f4f4590bff963d2a39a2, type: 2}
+  - {fileID: 11400000, guid: d211cc89d0157fe4a8ec60148c4c3286, type: 2}
+  - {fileID: 11400000, guid: c57a0a76482e4d94b96ca9db24faa0c5, type: 2}
   enemies:
-  - {fileID: 1469674388548084620, guid: 37492c9e80e790d40bc0789fb892477f, type: 3}
-  background: {fileID: 21300000, guid: 6a8b0ecc168e80048b8295b13c7eb784, type: 3}
-  battleMusicCalm: {fileID: 8300000, guid: b732bc6ca4a9bf746a8c98a909000551, type: 3}
-  battleMusicIntense: {fileID: 8300000, guid: 45d4917aae707984caa9849a68f8273b, type: 3}
+  - {fileID: 1469674388548084620, guid: e14621fc4fcc4bc46b90a0e11de6f026, type: 3}
+  - {fileID: 1469674388548084620, guid: d70528302ed6db24ca149daef30a8e7c, type: 3}
+  background: {fileID: 21300000, guid: 3d01de30ee6ff3144968ffe962675492, type: 3}
+  battleMusicCalm: {fileID: 8300000, guid: 06e22fd728ea70240a03ca760c7bf7fe, type: 3}
+  battleMusicIntense: {fileID: 8300000, guid: 4f3ad0f06d3d4674596be3bb6959f6b8, type: 3}
+  bossMusic: {fileID: 0}
+  isBoss: 0

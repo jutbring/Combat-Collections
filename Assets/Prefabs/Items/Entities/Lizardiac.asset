@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 1
   itemSprite: {fileID: 0}
   dangerFactor: 1
-  damage: 21
+  damage: 22
   weakeningChance: 8
   weakeningStrength: 2
   critChance: 5

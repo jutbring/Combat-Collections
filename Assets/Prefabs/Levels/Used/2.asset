@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorial: 0
   potentialLoot:
-  - {fileID: 11400000, guid: 5c3280220e5c95f4eadbc044a59117d2, type: 2}
   - {fileID: 11400000, guid: a50dc1cfc803552488591bfd6bf82de8, type: 2}
+  - {fileID: 11400000, guid: 5c3280220e5c95f4eadbc044a59117d2, type: 2}
   enemies:
   - {fileID: 1469674388548084620, guid: 9c41ed87ffb49e44792b7967fbfc895c, type: 3}
-  - {fileID: 1469674388548084620, guid: 60c095d5224f1144689fb215bf573826, type: 3}
+  - {fileID: 1469674388548084620, guid: 9c41ed87ffb49e44792b7967fbfc895c, type: 3}
   background: {fileID: 21300000, guid: 62ecaf5f270d8a34dad57bf72c5aee0e, type: 3}
   battleMusicCalm: {fileID: 8300000, guid: cd44062f287c1a3499f7ba6216769e2f, type: 3}
   battleMusicIntense: {fileID: 8300000, guid: 5bf8d7d865c5ae24a8224823aefce34b, type: 3}
+  bossMusic: {fileID: 0}
+  isBoss: 0

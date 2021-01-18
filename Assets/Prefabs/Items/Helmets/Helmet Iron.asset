@@ -30,7 +30,7 @@ MonoBehaviour:
   missChance: 0
   blindingChance: 0
   blindingStrength: 0
-  resistance: 0.7
+  resistance: 0.65
   blockStrength: 0.25
   healStrength: 6.5
   upgradeItem: {fileID: 11400000, guid: 1ed0d66623939c84e9242ad9a6104229, type: 2}

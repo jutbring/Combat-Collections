@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e6c03e70aee0e4aaf1fb159414b7fb, type: 3}
+  m_Name: 19
+  m_EditorClassIdentifier: 
+  tutorial: 0
+  potentialLoot:
+  - {fileID: 11400000, guid: 8b1be09d30b098e47868a91e0e8ad2df, type: 2}
+  - {fileID: 11400000, guid: c4f87470db259ae488fd94d06c177106, type: 2}
+  enemies:
+  - {fileID: 1469674388548084620, guid: ed04cbcd793a3a34abb5f96d812fcad4, type: 3}
+  - {fileID: 1469674388548084620, guid: a1dfe8b5561db6949a1e9300e3430983, type: 3}
+  background: {fileID: 21300000, guid: 6a8b0ecc168e80048b8295b13c7eb784, type: 3}
+  battleMusicCalm: {fileID: 8300000, guid: 5f01830f715fc804abbdb4e641d1047e, type: 3}
+  battleMusicIntense: {fileID: 8300000, guid: 7c8b471d4ff995e408cb8023741fd9d6, type: 3}
+  bossMusic: {fileID: 8300000, guid: 7e8721080b92e42419a78e76f51dd3ea, type: 3}
+  isBoss: 0

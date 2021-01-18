@@ -23,15 +23,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 47.68313
-        outSlope: 47.68313
+        inSlope: 25.273287
+        outSlope: 25.273287
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.2941176
+        outWeight: 0.280112
       - serializedVersion: 3
-        time: 0.033333335
-        value: 0.65
+        time: 0.06666667
+        value: 0.68394583
         inSlope: 1.4528614
         outSlope: 1.4528614
         tangentMode: 0
@@ -39,8 +39,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.6099865
       - serializedVersion: 3
-        time: 0.25
-        value: 0.529066
+        time: 0.23333333
+        value: 0.64381707
         inSlope: -2.3741062
         outSlope: -2.4692297
         tangentMode: 1
@@ -138,6 +138,82 @@ AnimationClip:
     attribute: material.Color_A2A02950.a
     path: CrystalHolder/CrystalMesh/CrystalEffect
     classID: 199
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1.3038197
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Color_DBAA40E7.r
+    path: CrystalHolder/CrystalMesh/CrystalMesh (2)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.6658022
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Color_DBAA40E7.g
+    path: CrystalHolder/CrystalMesh/CrystalMesh (2)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.40957674
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Color_DBAA40E7.b
+    path: CrystalHolder/CrystalMesh/CrystalMesh (2)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.16862746
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Color_DBAA40E7.a
+    path: CrystalHolder/CrystalMesh/CrystalMesh (2)
+    classID: 23
     script: {fileID: 0}
   m_PPtrCurves: []
   m_SampleRate: 60
@@ -182,6 +258,34 @@ AnimationClip:
       typeID: 199
       customType: 22
       isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1035009061
+      attribute: 1166452909
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1035009061
+      attribute: 1434888365
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1035009061
+      attribute: 1703323821
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1035009061
+      attribute: 1971759277
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
     pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
@@ -210,15 +314,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 47.68313
-        outSlope: 47.68313
+        inSlope: 25.273287
+        outSlope: 25.273287
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.2941176
+        outWeight: 0.280112
       - serializedVersion: 3
-        time: 0.033333335
-        value: 0.65
+        time: 0.06666667
+        value: 0.68394583
         inSlope: 1.4528614
         outSlope: 1.4528614
         tangentMode: 0
@@ -226,8 +330,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.6099865
       - serializedVersion: 3
-        time: 0.25
-        value: 0.529066
+        time: 0.23333333
+        value: 0.64381707
         inSlope: -2.3741062
         outSlope: -2.4692297
         tangentMode: 1
@@ -325,6 +429,82 @@ AnimationClip:
     attribute: material.Color_A2A02950.a
     path: CrystalHolder/CrystalMesh/CrystalEffect
     classID: 199
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1.3038197
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Color_DBAA40E7.r
+    path: CrystalHolder/CrystalMesh/CrystalMesh (2)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.6658022
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Color_DBAA40E7.g
+    path: CrystalHolder/CrystalMesh/CrystalMesh (2)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.40957674
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Color_DBAA40E7.b
+    path: CrystalHolder/CrystalMesh/CrystalMesh (2)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.16862746
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material.Color_DBAA40E7.a
+    path: CrystalHolder/CrystalMesh/CrystalMesh (2)
+    classID: 23
     script: {fileID: 0}
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0

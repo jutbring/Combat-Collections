@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1326d65e7ed321043afedb4af83be65e, type: 3}
-  m_Name: Camotion
+  m_Name: Frog
   m_EditorClassIdentifier: 
   itemType: 1
   itemSprite: {fileID: 0}
   dangerFactor: 1
-  damage: 75
-  weakeningChance: 20
-  weakeningStrength: 1.9
-  critChance: 7.15
-  critStrength: 1.6
-  chargeStrength: 1.8
+  damage: 66
+  weakeningChance: 0
+  weakeningStrength: 0
+  critChance: 5
+  critStrength: 1.7
+  chargeStrength: 1.75
   poisonChance: 0
   poisonStrength: 0
-  poisonAmount: 5
+  poisonAmount: 0
   ignitionChance: 0
   ignitionStrength: 0
   ignitionAmount: 0
-  missChance: 2
-  blindingChance: 25
-  blindingStrength: 70
-  resistance: 4
+  missChance: 2.5
+  blindingChance: 0
+  blindingStrength: 0
+  resistance: 4.2
   blockStrength: 3
-  healStrength: 25
+  healStrength: 22
   upgradeItem: {fileID: 0}

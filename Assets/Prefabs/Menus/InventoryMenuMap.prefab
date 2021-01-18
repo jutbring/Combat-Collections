@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7732140598206542751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4993605379311623798}
+  m_Layer: 0
+  m_Name: MergeTutorialPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4993605379311623798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7732140598206542751}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5, y: -5, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5322974831587679905}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3379445874614421374
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -913,22 +943,22 @@ PrefabInstance:
     - target: {fileID: 2397926831118772988, guid: 58331aa9f1f3a174da5834107015bcf6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -5
+      value: -5.25
       objectReference: {fileID: 0}
     - target: {fileID: 2397926831118772988, guid: 58331aa9f1f3a174da5834107015bcf6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.875
+      value: 0.7499999
       objectReference: {fileID: 0}
     - target: {fileID: 2397926831118772988, guid: 58331aa9f1f3a174da5834107015bcf6,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 8
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 2397926831118772988, guid: 58331aa9f1f3a174da5834107015bcf6,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 7.75
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 3859404836698055277, guid: 58331aa9f1f3a174da5834107015bcf6,
         type: 3}
@@ -1019,7 +1049,7 @@ PrefabInstance:
     - target: {fileID: 8752695023051488686, guid: 58331aa9f1f3a174da5834107015bcf6,
         type: 3}
       propertyPath: inventoryPositionOffset.y
-      value: 3
+      value: 3.3125
       objectReference: {fileID: 0}
     - target: {fileID: 8752695023051488686, guid: 58331aa9f1f3a174da5834107015bcf6,
         type: 3}
@@ -1068,8 +1098,30 @@ PrefabInstance:
       propertyPath: UnequipButton
       value: 
       objectReference: {fileID: 6458112495610172104}
+    - target: {fileID: 8752695023051488686, guid: 58331aa9f1f3a174da5834107015bcf6,
+        type: 3}
+      propertyPath: speechBubble
+      value: 
+      objectReference: {fileID: 3440772758616432864, guid: b2d25b5533942c341b2ab1dd2ca7296e,
+        type: 3}
+    - target: {fileID: 8752695023051488686, guid: 58331aa9f1f3a174da5834107015bcf6,
+        type: 3}
+      propertyPath: mergeTutorialPosition
+      value: 
+      objectReference: {fileID: 4993605379311623798}
+    - target: {fileID: 8752695023051488686, guid: 58331aa9f1f3a174da5834107015bcf6,
+        type: 3}
+      propertyPath: mergeLine
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58331aa9f1f3a174da5834107015bcf6, type: 3}
+--- !u!4 &5322974831587679905 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3859404836698055277, guid: 58331aa9f1f3a174da5834107015bcf6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8957762085470551244}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &371420078253474146 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8752695023051488686, guid: 58331aa9f1f3a174da5834107015bcf6,

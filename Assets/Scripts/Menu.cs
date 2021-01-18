@@ -27,12 +27,15 @@ public class Menu : MonoBehaviour
     [SerializeField] GameObject EquipButton = null;
     [SerializeField] GameObject UnequipButton = null;
     [SerializeField] GameObject RemoveButton = null;
+    [SerializeField] SpeechBubble speechBubble = null;
+    [SerializeField] Transform mergeTutorialPosition = null;
 
     MapSystem1 mapSystem = null;
     int heldItemIndex = -1;
     int selectedItemIndex = -1;
     float timeSinceHold = 0f;
     bool isInventory = false;
+    SpeechBubble currentBubble = null;
     private void Start()
     {
         if (firstSelected)
@@ -46,12 +49,14 @@ public class Menu : MonoBehaviour
     {
         if (isInventory)
         {
+            if (currentBubble)
+                Destroy(currentBubble.gameObject);
+            itemSprites.Clear();
+            itemAnimators.Clear();
             foreach (Animator animator in panel.GetComponentsInChildren<Animator>())
             {
                 Destroy(animator.gameObject);
             }
-            itemSprites.Clear();
-            itemAnimators.Clear();
             for (int i = 0; i < playerInventory.maxItems; i++)
             {
                 if (playerInventory.items.Count > i)
@@ -73,7 +78,38 @@ public class Menu : MonoBehaviour
                     itemSprites[i].transform.localPosition = GameSettings.GetSpriteOffset(itemSprites[i].sprite);
                 }
             }
+            if (!playerInventory.hasMerged && type == MenuTypes.MapInventory)
+            {
+                int duplicateAmount = 0;
+                for (int i = 0; i < playerInventory.items.Count; i++)
+                {
+                    itemAnimators[i].SetBool("MergeTutorial", false);
+                    for (int j = 0; j < playerInventory.items.Count; j++)
+                    {
+                        if (playerInventory.items[i].upgradeItem == playerInventory.items[j].upgradeItem && i != j && playerInventory.items[j].upgradeItem != null)
+                        {
+                            itemAnimators[i].SetBool("MergeTutorial", true);
+                            itemAnimators[j].SetBool("MergeTutorial", true);
+                            duplicateAmount += 1;
+                        }
+                    }
+                }
+                bool firstMerge = duplicateAmount >= 2;
+                if (firstMerge)
+                {
+                    string message = "Drag and drop to merge items";
+                    InstantiateMessage(message, mergeTutorialPosition);
+                }
+            }
         }
+    }
+    void InstantiateMessage(string message, Transform position)
+    {
+        if (currentBubble)
+            Destroy(currentBubble.gameObject);
+        SpeechBubble bubble = Instantiate(speechBubble, position).GetComponent<SpeechBubble>();
+        bubble.message = message;
+        currentBubble = bubble;
     }
     Vector3 GetSlotPosition(int index)
     {
@@ -152,6 +188,8 @@ public class Menu : MonoBehaviour
                             heldItemIndex = i;
                             selectedItemIndex = i;
                         }
+                        itemAnimators[i].SetBool("Equipped", isEquipped);
+                        itemAnimators[i].SetBool("Mergable", itemInRange);
                         if (clickedUp)
                         {
                             if (mouseInRange)
@@ -170,8 +208,6 @@ public class Menu : MonoBehaviour
                                 heldItemIndex = -1;
                             }
                         }
-                        itemAnimators[i].SetBool("Equipped", isEquipped);
-                        itemAnimators[i].SetBool("Mergable", itemInRange);
                         break;
                     default:
                         break;
@@ -194,7 +230,6 @@ public class Menu : MonoBehaviour
         FindObjectOfType<MapSystem1>().PlayImpactEffect(2, 2);
         Sprite oldItemSprite = itemSprites[otherItemIndex].sprite;
         playerInventory.items[otherItemIndex] = playerInventory.items[otherItemIndex].upgradeItem;
-        playerInventory.items.RemoveAt(heldItemIndex);
         switch (playerInventory.items[otherItemIndex].itemType)
         {
             case Item.itemTypes.Helmet:
@@ -209,8 +244,10 @@ public class Menu : MonoBehaviour
                 break;
             default: break;
         }
+        playerInventory.items.RemoveAt(heldItemIndex);
         heldItemIndex = -1;
         selectedItemIndex = -1;
+        playerInventory.hasMerged = true;
         CreateSlots();
     }
     void UpdateHeldItem()
@@ -302,7 +339,7 @@ public class Menu : MonoBehaviour
             return;
         levelRestarter = Instantiate(levelRestarter.gameObject, transform).GetComponent<LevelSetup>();
         levelRestarter.level = instantiator.levelStats;
-
+        levelRestarter.isBoss = instantiator.levelStats.isBoss;
     }
     public void LoadMap()
     {

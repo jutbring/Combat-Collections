@@ -7,7 +7,7 @@ public class GameSettings : MonoBehaviour
     [Header("Inputs")]
     public static List<KeyCode> confirmKeys = new List<KeyCode>() { KeyCode.Mouse0, KeyCode.Space, KeyCode.Return, KeyCode.KeypadEnter };
     public static List<KeyCode> pauseKeys = new List<KeyCode>() { KeyCode.P, KeyCode.Escape };
-    public static List<KeyCode> inventoryKeys = new List<KeyCode>() { KeyCode.Escape, KeyCode.I };
+    public static List<KeyCode> inventoryKeys = new List<KeyCode>() { KeyCode.Escape, KeyCode.E };
     public static List<KeyCode> forwardKeys = new List<KeyCode>() { KeyCode.D, KeyCode.W, KeyCode.RightArrow, KeyCode.UpArrow };
     public static List<KeyCode> backKeys = new List<KeyCode>() { KeyCode.A, KeyCode.S, KeyCode.LeftArrow, KeyCode.DownArrow };
 
